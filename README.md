@@ -191,33 +191,92 @@ Como já definimos anteriormente, devemos testar os comportamentos existentes na
 
 Vejam um exemplo de código que representa uma chamada de função:
 
-`src/call.js`
-
+> `src/call/model.js`
 ```javascript
-const data = [{ id: 2, name: 'example' }]
+const data = [{ id: 2, name: 'call' }]
+
+const model = {
+  getById: (id) => data.find((item) => item.id === id)
+}
+
+module.exports = model
+```
+
+> `src/call/service.js`
+```
+const model = require('./model')
 
 const service = {
   getById(id) {
-    const item = data.find((item) => item.id === id)
+    const item = model.getById(id)
     if (!item) throw new Error()
     return item
   }
 }
 
+module.exports = service
+```
+
+> `src/call/controller.js`
+```javascript
+const service = require('./service')
+
 const controller = {
-  getById(id) {
-    const result = service.getById(id)
-    return result
-  }
+  getById: (id) => service.getById(id)
 }
 
-module.exports = { service, controller }
+module.exports = controller 
 ```
 
 No exemplo acima, o método `controller.getById` chama o método `service.getById`. Nessa situação podemos esperar somente 2 comportamentos sendo:
 
-- falha: quando o service não retorna o resultado ou dispara um erro
-- sucesso: quando o service retorna o resultado esperado
+- falha quando o service dispara um erro inesperado
+- falha quando o service não retorna um objeto
+- sucesso quando o service retorna o resultado esperado
+
+Para testarmos a função `controller.getById` podemos fazer da seguinte maneira:
+
+```javascript
+// importações das bibliotecas
+const { expect } = require('chai')
+const sinon = require('sinon')
+// importações dos elementos do teste
+const controller = require('../../src/call/controller')
+const service = require('../../src/call/service')
+
+// definição do teste (normalmente usado o path do arquivo em de `src`)
+describe('call/controller', () => { 
+  // remove qualquer alteração de comportamento usada em algum teste
+  beforeEach(sinon.restore) 
+
+  // descreve o teste a ser criado
+  describe('getById', () => { 
+    // define qual comportamento deve ser testado
+    it('falha quando o service dispara um erro inesperado', () => { 
+      // manipula a dependencia para obrigar o comportamento
+      sinon.stub(service, 'getById').throws() 
+      // 6
+      expect(controller.getById(0)).to.throw() 
+    })
+
+    // 7
+    it('falha quando o service não retorna um objeto', () => { 
+      // 8
+      sinon.stub(service, 'getById').returns() 
+      // 9
+      expect(controller.getById(0)).to.throw() 
+    })
+    // 10
+    it('sucesso quando o service retorna o resultado esperado', () => { 
+      // 11
+      sinon.stub(service, 'getById').returns({}) 
+      // 12
+      expect(controller.getById(0)).to.ok 
+    })
+  })
+})
+```
+
 
 ### Testes de integração em JS
 
