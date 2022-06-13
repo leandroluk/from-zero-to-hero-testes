@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: js-mysql
+    image: mysql:5
+    environment: [ "MYSQL_ROOT_PASSWORD=root" ]
+    ports: [ "3306:3306" ]
+    volumes: [ "./mist:/docker-entrypoint-initdb.d" ]
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-proot" ]
+      timeout: 10s
+      retries: 10
+      start_period: 10s

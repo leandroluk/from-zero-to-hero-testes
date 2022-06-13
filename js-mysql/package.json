@@ -1,0 +1,44 @@
+{
+  "name": "js-mysql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "nodemon": "nodemon -r dotenv/config src",
+    "start": "node -r dotenv/config src",
+    "test": "mocha tests/**/*.{spec,test}.js --exit",
+    "compose": "docker-compose down && docker-compose up -d"
+  },
+  "keywords": [],
+  "author": {
+    "email": "leandroluk@gmail.com",
+    "name": "Leandro S. Gomes",
+    "url": "https://linkedin.com/in/leandroluk"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/chai": "^4.3.1",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/chai-http": "^4.2.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/mocha": "^9.1.1",
+    "@types/mysql": "^2.15.21",
+    "@types/node": "^17.0.40",
+    "@types/sinon": "^10.0.11",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.3.0",
+    "eslint-config-trybe-backend": "^1.0.4",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.16",
+    "sinon": "^14.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "joi": "^17.6.0",
+    "mysql2": "^2.3.3"
+  }
+}

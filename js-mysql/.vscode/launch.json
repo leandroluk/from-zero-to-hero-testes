@@ -1,0 +1,34 @@
+{
+  "configurations": [
+    {
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "name": "start",
+      "program": "${workspaceFolder}/src",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "test",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "test",
+        "--",
+        "-t",
+        "10000"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    }
+  ]
+}
