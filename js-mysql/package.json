@@ -7,6 +7,7 @@
     "nodemon": "nodemon -r dotenv/config src",
     "start": "node -r dotenv/config src",
     "test": "mocha tests/**/*.{spec,test}.js --exit",
+    "test:coverage": "nyc mocha tests/**/*.{spec,test}.js --exit",
     "compose": "docker-compose down && docker-compose up -d"
   },
   "keywords": [],
@@ -33,6 +34,7 @@
     "eslint-config-trybe-backend": "^1.0.4",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
+    "nyc": "^15.1.0",
     "sinon": "^14.0.0"
   },
   "dependencies": {

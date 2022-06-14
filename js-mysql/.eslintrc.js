@@ -2,14 +2,14 @@ module.exports = {
   'extends': 'trybe-backend',
   'overrides': [
     {
-      'files': [
-        './tests/**/*.spec.js',
-        './tests/**/*.test.js'
-      ],
+      'files': ['./tests/**/*.js'],
       'rules': {
-        'mocha/no-mocha-arrows': 'off',
         'no-unused-expressions': 'off',
-        'sonarjs/no-duplicate-string': 'off'
+        'newline-per-chained-call': 'off',
+        'mocha/no-mocha-arrows': 'off',
+        'mocha/no-setup-in-describe': 'off',
+        'sonarjs/no-duplicate-string': 'off',
+        'sonarjs/prefer-object-literal': 'off',
       }
     }
   ]

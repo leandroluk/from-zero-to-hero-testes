@@ -53,19 +53,19 @@ describe('services/product.service', () => {
   describe('existsByArrayOfId', () => {
     it('should rejects if productModel.listByArrayOfId throws', () => {
       sinon.stub(productModel, 'listByArrayOfId').rejects();
-      expect(productService.exists(1))
+      expect(productService.existsByArrayOfId(1))
         .to.eventually.be.rejected;
     });
 
     it('should rejects if productModel.listByArrayOfId return missing item', () => {
       sinon.stub(productModel, 'listByArrayOfId').resolves([{ id: 2 }]);
-      expect(productService.exists([1]))
+      expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.rejectedWith(NotFoundError);
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'listByArrayOfId').resolves([{ id: 1 }]);
-      expect(productService.exists(1))
+      expect(productService.existsByArrayOfId(1))
         .to.eventually.be.undefined;
     });
   });

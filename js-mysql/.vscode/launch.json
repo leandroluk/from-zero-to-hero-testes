@@ -12,7 +12,7 @@
         "<node_internals>/**"
       ],
       "type": "node",
-      "envFile": "${workspaceFolder}/.env"
+      "envFile": "${workspaceFolder}/.env",
     },
     {
       "name": "test",
@@ -22,7 +22,7 @@
         "test",
         "--",
         "-t",
-        "10000"
+        "999999"
       ],
       "runtimeExecutable": "npm",
       "skipFiles": [

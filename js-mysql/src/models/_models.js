@@ -23,7 +23,6 @@ const snake2camel = (str) => str
  * @returns {string}
  */
 const camel2snake = (str) => str
-  .replace(/(^[A-Z])/, (_, $1) => $1.toLowerCase())
   .replace(/([A-Z]+)/g, (_, $1) => `_${$1.toLowerCase()}`);
 
 const empty2null = (arr) => arr
