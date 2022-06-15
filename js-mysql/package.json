@@ -8,7 +8,7 @@
     "start": "node -r dotenv/config src",
     "test": "mocha tests/**/*.{spec,test}.js --exit",
     "test:coverage": "nyc mocha tests/**/*.{spec,test}.js --exit",
-    "compose": "docker-compose down && docker-compose up -d"
+    "compose": "docker-compose down && docker-compose up --build -d"
   },
   "keywords": [],
   "author": {
@@ -31,6 +31,7 @@
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
+    "dotenv": "^16.0.1",
     "eslint-config-trybe-backend": "^1.0.4",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",

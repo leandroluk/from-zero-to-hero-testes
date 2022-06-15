@@ -1,0 +1,25 @@
+{
+  "name": "js-mysql-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha features/**/*.{spec,test}.js --exit -t 10000",
+    "compose": "docker-compose down && docker-compose up --build -d"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.2.0",
+    "@types/chai": "^4.3.1",
+    "@types/chai-http": "^4.2.0",
+    "@types/faker": "^6.6.9",
+    "@types/mocha": "^9.1.1",
+    "@types/mysql": "^2.15.21",
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0",
+    "mysql2": "^2.3.3"
+  }
+}

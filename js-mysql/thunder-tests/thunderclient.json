@@ -112,11 +112,11 @@
     "colId": "b51d7fa5-80ad-4ecc-a12a-abdd39c4ec00",
     "containerId": "1f291392-4b13-4276-9f2a-c5f114480ce9",
     "name": "getSale",
-    "url": "{{host}}/api/sales/1",
+    "url": "{{host}}/api/sales/2",
     "method": "GET",
     "sortNum": 80000,
     "created": "2022-06-13T16:26:25.652Z",
-    "modified": "2022-06-13T16:26:31.187Z",
+    "modified": "2022-06-15T00:08:14.179Z",
     "headers": [],
     "params": [],
     "tests": []

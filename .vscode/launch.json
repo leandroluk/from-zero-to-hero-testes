@@ -5,14 +5,15 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "name": "js-mysql",
-      "program": "${workspaceFolder}/js-mysql/src",
+      "program": "${workspaceFolder}/src",
       "request": "launch",
       "restart": true,
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "type": "node"
+      "type": "node",
+      "localRoot": "./js-mysql"
     }
   ]
 }
