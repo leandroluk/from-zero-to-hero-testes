@@ -8,10 +8,11 @@ const sinon = require('sinon');
  * }}
  */
 const makeRes = () => {
-  const res = {};
-  res.sendStatus = sinon.stub().returns();
-  res.json = sinon.stub().returns();
-  res.status = sinon.stub().returns(res);
+  const res = {
+    sendStatus: sinon.stub().returns(undefined),
+    json: sinon.stub().returns(undefined),
+    status: sinon.stub().callsFake(() => res),
+  };
   return res;
 };
 

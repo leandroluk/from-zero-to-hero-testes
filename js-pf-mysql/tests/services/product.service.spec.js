@@ -53,7 +53,7 @@ describe('services/product.service', () => {
   describe('existsByArrayOfId', () => {
     it('should rejects if productModel.listByArrayOfId throws', () => {
       sinon.stub(productModel, 'listByArrayOfId').rejects();
-      expect(productService.existsByArrayOfId(1))
+      expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.rejected;
     });
 
@@ -65,7 +65,7 @@ describe('services/product.service', () => {
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'listByArrayOfId').resolves([{ id: 1 }]);
-      expect(productService.existsByArrayOfId(1))
+      expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.undefined;
     });
   });
@@ -106,7 +106,7 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'remove').resolves();
+      sinon.stub(productModel, 'get').resolves();
       expect(productService.get(1))
         .to.eventually.be.ok;
     });

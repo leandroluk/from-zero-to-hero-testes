@@ -10,6 +10,7 @@ module.exports = {
         'mocha/no-setup-in-describe': 'off',
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/prefer-object-literal': 'off',
+        'max-lines-per-function': 'off'
       }
     }
   ]

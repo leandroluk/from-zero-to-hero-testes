@@ -40,19 +40,19 @@ describe('services/sale.service', () => {
   describe('exists', () => {
     it('should rejects if saleModel.get throws', () => {
       sinon.stub(saleModel, 'get').rejects();
-      expect(saleService.add(1))
+      expect(saleService.exists(1))
         .to.eventually.be.rejected;
     });
 
     it('should rejects if saleModel.get return empty', () => {
       sinon.stub(saleModel, 'get').resolves();
-      expect(saleService.add(1))
+      expect(saleService.exists(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(saleModel, 'get').resolves({});
-      expect(saleService.add(1))
+      expect(saleService.exists(1))
         .to.eventually.be.undefined;
     });
   });
@@ -111,7 +111,7 @@ describe('services/sale.service', () => {
 
     it('should rejects if saleProductModel.listBySaleId throws', () => {
       sinon.stub(saleModel, 'get').resolves({});
-      sinon.stub(saleProductModel, 'listBySaleId').rejects([]);
+      sinon.stub(saleProductModel, 'listBySaleId').rejects();
       expect(saleService.get(1))
         .to.eventually.be.rejected;
     });

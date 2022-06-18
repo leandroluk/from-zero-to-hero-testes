@@ -25,18 +25,21 @@ describe('routes/api/products', () => {
       it(`should return 400 if param id is "${invalid}"(invalid)`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).delete(url);
+        const result = await chai
+          .request(app)
+          .delete(url);
 
         expect(result.status).to.equal(400);
       });
     });
 
     it('should return 404 if product not found', async () => {
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[]]);
+      sinon.stub(db, 'query').resolves([[]]);
       const url = `${baseUrl}/999`;
 
-      const result = await chai.request(app).delete(url);
+      const result = await chai
+        .request(app)
+        .delete(url);
 
       expect(result.status).to.equal(404);
     });
@@ -48,7 +51,9 @@ describe('routes/api/products', () => {
 
       const url = `${baseUrl}/1`;
 
-      const result = await chai.request(app).delete(url);
+      const result = await chai
+        .request(app)
+        .delete(url);
 
       expect(result.status).to.equal(204);
     });
@@ -61,7 +66,10 @@ describe('routes/api/products', () => {
       it(`should return 400 if param ${invalid} is invalid`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).put(url).send({});
+        const result = await chai
+          .request(app)
+          .put(url)
+          .send({});
 
         expect(result.status).to.equal(400);
       });
@@ -78,7 +86,10 @@ describe('routes/api/products', () => {
       it(`should return 400 if body ${JSON.stringify(invalid)} is invalid`, async () => {
         const url = `${baseUrl}/1`;
 
-        const result = await chai.request(app).put(url).send(invalid);
+        const result = await chai
+          .request(app)
+          .put(url)
+          .send(invalid);
 
         expect(result.status).to.equal(400);
       });
@@ -89,7 +100,10 @@ describe('routes/api/products', () => {
       sinon.stub(db, 'query')
         .onCall(0).resolves([[]]);
 
-      const result = await chai.request(app).put(url).send({});
+      const result = await chai
+        .request(app)
+        .put(url)
+        .send({});
 
       expect(result.status).to.equal(404);
     });
@@ -101,7 +115,10 @@ describe('routes/api/products', () => {
         .onCall(1).resolves()
         .onCall(2).resolves([[{}]]);
 
-      const result = await chai.request(app).put(url).send({});
+      const result = await chai
+        .request(app)
+        .put(url)
+        .send({});
 
       expect(result.status).to.equal(200);
     });
@@ -114,7 +131,9 @@ describe('routes/api/products', () => {
       it(`should throw if param ${invalid} is invalid`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).get(url);
+        const result = await chai
+          .request(app)
+          .get(url);
 
         expect(result.status).to.equal(400);
       });
@@ -124,7 +143,9 @@ describe('routes/api/products', () => {
       sinon.stub(db, 'query').resolves([[]]);
       const url = `${baseUrl}/1`;
 
-      const result = await chai.request(app).get(url);
+      const result = await chai
+        .request(app)
+        .get(url);
 
       expect(result.status).to.equal(404);
     });
@@ -135,7 +156,9 @@ describe('routes/api/products', () => {
         .onCall(1).resolves([[{}]]);
       const url = `${baseUrl}/1`;
 
-      const result = await chai.request(app).get(url);
+      const result = await chai
+        .request(app)
+        .get(url);
 
       expect(result.status).to.equal(200);
     });
@@ -156,10 +179,28 @@ describe('routes/api/products', () => {
       { description: 'a', price: 1, unit: true }, // invalid "unit" (boolean)
     ].forEach((invalid) => {
       it(`should return 400 if body ${JSON.stringify(invalid)} is invalid`, async () => {
-        const result = await chai.request(app).post(baseUrl).send(invalid);
+        const result = await chai
+          .request(app)
+          .post(baseUrl)
+          .send(invalid);
 
         expect(result.status).to.equal(400);
       });
+    });
+
+    it('should return 201 with created product', async () => {
+      const mock = { description: 'a', price: 1, unit: 'a' };
+
+      sinon.stub(db, 'query')
+        .onCall(0).resolves([[{ insertId: 1 }]])
+        .onCall(1).resolves([[{ ...mock, id: 1 }]]);
+
+      const result = await chai
+        .request(app)
+        .post(baseUrl)
+        .send(mock);
+
+      expect(result.status).to.equal(201);
     });
   });
 
@@ -167,7 +208,11 @@ describe('routes/api/products', () => {
     const baseUrl = '/api/products';
 
     it('should return 200 with products', async () => {
-      const result = await chai.request(app).get(baseUrl);
+      sinon.stub(db, 'query').resolves([[]]);
+
+      const result = await chai
+        .request(app)
+        .get(baseUrl);
 
       expect(result.status).to.equal(200);
     });

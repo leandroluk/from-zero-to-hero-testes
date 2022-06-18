@@ -23,7 +23,7 @@ describe('routes/index', () => {
     it('should return 200 if connect to db', async () => {
       sinon.stub(db, 'query').resolves();
       const result = await chai.request(app).get(url);
-      expect(result.statusCode).to.equal(200);
+      expect(result.status).to.equal(200);
     });
   });
 });

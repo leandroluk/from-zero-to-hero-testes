@@ -40,8 +40,8 @@ const saleService = {
   },
 
   async exists(id) {
-    const sale = await saleModel.get(id);
-    if (!sale) throw new NotFoundError('"sale" not found.');
+    const item = await saleModel.get(id);
+    if (!item) throw new NotFoundError('"sale" not found.');
   },
 
   async edit(id, changes) {

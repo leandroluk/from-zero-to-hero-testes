@@ -25,7 +25,9 @@ describe('routes/api/sales', () => {
       it(`should return 400 if param id is "${invalid}"(invalid)`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).delete(url);
+        const result = await chai
+          .request(app)
+          .delete(url);
 
         expect(result.status).to.equal(400);
       });
@@ -36,7 +38,9 @@ describe('routes/api/sales', () => {
         .onCall(0).resolves([[]]);
       const url = `${baseUrl}/999`;
 
-      const result = await chai.request(app).delete(url);
+      const result = await chai
+        .request(app)
+        .delete(url);
 
       expect(result.status).to.equal(404);
     });
@@ -48,7 +52,9 @@ describe('routes/api/sales', () => {
 
       const url = `${baseUrl}/1`;
 
-      const result = await chai.request(app).delete(url);
+      const result = await chai
+        .request(app)
+        .delete(url);
 
       expect(result.status).to.equal(204);
     });
@@ -61,47 +67,111 @@ describe('routes/api/sales', () => {
       it(`should return 400 if param ${invalid} is invalid`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).put(url).send({});
+        const result = await chai
+          .request(app)
+          .put(url)
+          .send({});
 
         expect(result.status).to.equal(400);
       });
     });
 
     [
-      { sellerName: 1 }, // invalid "sellerName" number
-      { sellerName: true }, // invalid "sellerName" boolean
-      { sellerName: Array.from(101).fill('0').join('') }, // invalid "sellerName" max 100
-      { purchaserName: 1 }, // invalid "purchaserName" number
-      { purchaserName: true }, // invalid "purchaserName" boolean
-      { purchaserName: Array.from(101).fill('0').join('') }, // invalid "purchaserName" max 100
-      { products: 'a' }, // invalid "products" string
-      { products: 1 }, // invalid "products" number
-      { products: true }, // invalid "products" number
-      { products: {} }, // invalid "products" array
-      { products: [] }, // invalid "products" min 1
-      { products: ['a'] }, // invalid "products[0]" string
-      { products: [1] }, // invalid "products[0]" number
-      { products: [true] }, // invalid "products[0]" number
-      { products: [{ description: 'a', quantity: 1, price: 1, unit: 'a' }] }, // missing "products[0].id"
-      { products: [{ id: 1, quantity: 1, price: 1, unit: 'a' }] }, // missing "products[0].description"
-      { products: [{ id: 1, description: 'a', price: 1, unit: 'a' }] }, // missing "products[0].quantity"
-      { products: [{ id: 1, description: 'a', quantity: 1, unit: 'a' }] }, // missing "products[0].price"
-      { products: [{ id: 1, description: 'a', quantity: 1, price: 1 }] }, // missing "products[0].unit"
-      { products: [{ id: 'a', description: 'a', quantity: 1, price: 1, unit: 'a' }] }, // invalid "products[0].id" string
-      { products: [{ id: true, description: 'a', quantity: 1, price: 1, unit: 'a' }] }, // missing "products[0].id" boolean
-      { products: [{ id: 1, description: 1, quantity: 1, price: 1, unit: 'a' }] }, // missing "products[0].description" number
-      { products: [{ id: 1, description: true, quantity: 1, price: 1, unit: 'a' }] }, // missing "products[0].description" string
-      { products: [{ id: 1, description: 'a', quantity: 'a', price: 1, unit: 'a' }] }, // missing "products[0].quantity" string
-      { products: [{ id: 1, description: 'a', quantity: true, price: 1, unit: 'a' }] }, // missing "products[0].quantity" boolean
-      { products: [{ id: 1, description: 'a', quantity: 1, price: 'a', unit: 'a' }] }, // missing "products[0].price" string
-      { products: [{ id: 1, description: 'a', quantity: 1, price: true, unit: 'a' }] }, // missing "products[0].price" boolean
-      { products: [{ id: 1, description: 'a', quantity: 1, price: 1, unit: 1 }] }, // missing "products[0].unit" number
-      { products: [{ id: 1, description: 'a', quantity: 1, price: 1, unit: true }] }, // missing "products[0].unit" boolean
+      {
+        sellerName: 1,
+      }, // invalid "sellerName" number
+      {
+        sellerName: true,
+      }, // invalid "sellerName" boolean
+      {
+        sellerName: Array.from(101).fill('0').join(''),
+      }, // invalid "sellerName" max 100
+      {
+        purchaserName: 1,
+      }, // invalid "purchaserName" number
+      {
+        purchaserName: true,
+      }, // invalid "purchaserName" boolean
+      {
+        purchaserName: Array.from(101).fill('0').join(''),
+      }, // invalid "purchaserName" max 100
+      {
+        products: 'a',
+      }, // invalid "products" string
+      {
+        products: 1,
+      }, // invalid "products" number
+      {
+        products: true,
+      }, // invalid "products" number
+      {
+        products: {},
+      }, // invalid "products" array
+      {
+        products: [],
+      }, // invalid "products" min 1
+      {
+        products: ['a'],
+      }, // invalid "products[0]" string
+      {
+        products: [1],
+      }, // invalid "products[0]" number
+      {
+        products: [true],
+      }, // invalid "products[0]" number
+      {
+        products: [{ description: 'a', quantity: 1, price: 1, unit: 'a' }],
+      }, // missing "products[0].id"
+      {
+        products: [{ id: 1, quantity: 1, price: 1, unit: 'a' }],
+      }, // missing "products[0].description"
+      {
+        products: [{ id: 1, description: 'a', price: 1, unit: 'a' }],
+      }, // missing "products[0].quantity"
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, unit: 'a' }],
+      }, // missing "products[0].price"
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, price: 1 }],
+      }, // missing "products[0].unit"
+      {
+        products: [{ id: 'a', description: 'a', quantity: 1, price: 1, unit: 'a' }],
+      }, // invalid "products[0].id" string
+      {
+        products: [{ id: true, description: 'a', quantity: 1, price: 1, unit: 'a' }],
+      }, // missing "products[0].id" boolean
+      {
+        products: [{ id: 1, description: 1, quantity: 1, price: 1, unit: 'a' }],
+      }, // missing "products[0].description" number
+      {
+        products: [{ id: 1, description: true, quantity: 1, price: 1, unit: 'a' }],
+      }, // missing "products[0].description" string
+      {
+        products: [{ id: 1, description: 'a', quantity: 'a', price: 1, unit: 'a' }],
+      }, // missing "products[0].quantity" string
+      {
+        products: [{ id: 1, description: 'a', quantity: true, price: 1, unit: 'a' }],
+      }, // missing "products[0].quantity" boolean
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, price: 'a', unit: 'a' }],
+      }, // missing "products[0].price" string
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, price: true, unit: 'a' }],
+      }, // missing "products[0].price" boolean
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, price: 1, unit: 1 }],
+      }, // missing "products[0].unit" number
+      {
+        products: [{ id: 1, description: 'a', quantity: 1, price: 1, unit: true }],
+      }, // missing "products[0].unit" boolean
     ].forEach((invalid) => {
       it(`should return 400 if body ${JSON.stringify(invalid)} is invalid`, async () => {
         const url = `${baseUrl}/1`;
 
-        const result = await chai.request(app).put(url).send(invalid);
+        const result = await chai
+          .request(app)
+          .put(url)
+          .send(invalid);
 
         expect(result.status).to.equal(400);
       });
@@ -109,10 +179,12 @@ describe('routes/api/sales', () => {
 
     it('should return 404 if not found', async () => {
       const url = `${baseUrl}/1`;
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[]]);
+      sinon.stub(db, 'query').resolves([[]]);
 
-      const result = await chai.request(app).put(url).send({});
+      const result = await chai
+        .request(app)
+        .put(url)
+        .send({});
 
       expect(result.status).to.equal(404);
     });
@@ -127,15 +199,18 @@ describe('routes/api/sales', () => {
         .onCall(4).resolves([[{}]]) //  saleModel.get
         .onCall(5).resolves([[]]); //   saleProductModel.listBySaleId
 
-      const result = await chai.request(app).put(url).send({
-        products: [{
-          id: 1,
-          description: 'a',
-          quantity: 1,
-          price: 1,
-          unit: 'a',
-        }],
-      });
+      const result = await chai
+        .request(app)
+        .put(url)
+        .send({
+          products: [{
+            id: 1,
+            description: 'a',
+            quantity: 1,
+            price: 1,
+            unit: 'a',
+          }],
+        });
 
       expect(result.status).to.equal(200);
     });
@@ -148,7 +223,9 @@ describe('routes/api/sales', () => {
       it(`should return 400 if param ${invalid} is invalid`, async () => {
         const url = `${baseUrl}/${invalid}`;
 
-        const result = await chai.request(app).get(url);
+        const result = await chai
+          .request(app)
+          .get(url);
 
         expect(result.status).to.equal(400);
       });
@@ -158,7 +235,9 @@ describe('routes/api/sales', () => {
       const url = `${baseUrl}/1`;
       sinon.stub(db, 'query').resolves([[]]);
 
-      const result = await chai.request(app).get(url);
+      const result = await chai
+        .request(app)
+        .get(url);
 
       expect(result.status).to.equal(404);
     });
@@ -170,7 +249,9 @@ describe('routes/api/sales', () => {
         .onCall(1).resolves([[{}]]) // saleService.get ~> saleModel.get
         .onCall(2).resolves([[]]); // saleProductModel.listBySaleId
 
-      const result = await chai.request(app).get(url);
+      const result = await chai
+        .request(app)
+        .get(url);
 
       expect(result.status).to.equal(200);
     });
@@ -319,24 +400,42 @@ describe('routes/api/sales', () => {
       }, // invalid "products[0].unit" boolean 
     ].forEach((invalid) => {
       it(`should return 400 if body ${JSON.stringify(invalid)} is invalid`, async () => {
-        const result = await chai.request(app).post(baseUrl).send(invalid);
+        const result = await chai
+          .request(app)
+          .post(baseUrl)
+          .send(invalid);
 
         expect(result.status).to.equal(400);
       });
     });
 
-    it('should return 200 if success', async () => {
-      const result = await chai.request(app).post(baseUrl).send({
+    it('should return 201 if success', async () => {
+      const saleMock = {
         sellerName: 'a',
         purchaserName: 'a',
-        products: [{
-          id: 1,
-          description: 'a',
-          quantity: 1,
-          price: 1,
-          unit: 'a',
-        }],
-      });
+      };
+      const productMock = {
+        id: 1,
+        description: 'a',
+        quantity: 1,
+        price: 1,
+        unit: 'a',
+      };
+      sinon.stub(db, 'query')
+        // productService.existsByArrayOfId ~> productModel.listByArrayOfId
+        .onCall(0).resolves([[{ id: 1 }]])
+        // saleService.add ~> saleModel.add
+        .onCall(1).resolves([[{ insertId: 1 }]])
+        // saleService.add ~> saleProductModel.bulkAddBySaleId
+        .onCall(2).resolves()
+        // saleService.get ~> saleModel.get
+        .onCall(3).resolves([[{}]])
+        // saleService.get ~> saleProductModel.listBySaleId
+        .onCall(4).resolves([[]]);
+      const result = await chai
+        .request(app)
+        .post(baseUrl)
+        .send({ ...saleMock, products: [productMock] });
       expect(result.status).to.equal(201);
     });
   });
@@ -344,7 +443,10 @@ describe('routes/api/sales', () => {
   describe('GET /', () => {
     const baseUrl = '/api/sales';
     it('should return 200 if sccess', async () => {
-      const result = await chai.request(app).get(baseUrl);
+      sinon.stub(db, 'query').resolves([[]]);
+      const result = await chai
+        .request(app)
+        .get(baseUrl);
 
       expect(result.status).to.equal(200);
     });
