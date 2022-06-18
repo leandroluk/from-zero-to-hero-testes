@@ -1,0 +1,55 @@
+{
+  "configurations": [
+    {
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "name": "start",
+      "program": "${workspaceFolder}/src",
+      "request": "launch",
+      "restart": true,
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/nodemon",
+      "args": [
+        "--ext",
+        "ts",
+        "--watch",
+        "src",
+        "--exec",
+        "ts-node -r dotenv/config"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "envFile": "${workspaceFolder}/.env",
+    },
+    {
+      "name": "test",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "test",
+        "--",
+        "-t",
+        "999999"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "nodemon",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "nodemon"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    }
+  ]
+}

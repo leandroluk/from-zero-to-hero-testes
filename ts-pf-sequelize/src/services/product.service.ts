@@ -1,0 +1,62 @@
+import Joi from 'joi';
+import { NotFoundError } from '../errors';
+import { productModel } from '../models';
+import { Indexable, Product } from '../types';
+import { runSchema } from './_services';
+
+export const productService = {
+  validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
+    id: Joi.number().required().positive().integer(),
+  }).required()),
+
+  validateBodyAdd: runSchema<Product.Add>(Joi.object<Product.Add>({
+    description: Joi.string().required().max(100),
+    price: Joi.number().required().positive(),
+    unit: Joi.string().required().max(20),
+  }).required()),
+
+  validateBodyEdit: runSchema<Product.Edit>(Joi.object<Product.Edit>({
+    description: Joi.string().max(100),
+    price: Joi.number().positive(),
+    unit: Joi.string().max(20),
+  }).required()),
+
+  async add(data: Product.Add): Promise<Product['id']> {
+    const model = await productModel.create(data);
+    return model.getDataValue('id');
+  },
+
+  async exists(id: Product['id']): Promise<void> {
+    const item = await productModel.findByPk(id);
+    if (!item) throw new NotFoundError('"product" not found.');
+  },
+
+  async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
+    const items = await productModel.findAll({ where: { id: arrayOfId } });
+    arrayOfId.forEach((id, index) => {
+      if (!items.some((item) => item.getDataValue(id) === id)) {
+        throw new NotFoundError(`"product[${index}]" not found.`);
+      }
+    });
+  },
+
+  async edit(id: Product['id'], changes: Product.Edit): Promise<void> {
+    await productModel.update(changes, { where: { id } });
+  },
+
+  async remove(id: Product['id']): Promise<void> {
+    await productModel.destroy({ where: { id } });
+  },
+
+  async get(id: Product['id']): Promise<Product> {
+    const model = await productModel.findByPk(id);
+    const item = model?.toJSON();
+    return item;
+  },
+
+  async list(): Promise<Product[]> {
+    const models = await productModel.findAll();
+    const items = models.map((model) => model.toJSON());
+    return items;
+  },
+};

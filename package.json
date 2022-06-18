@@ -4,7 +4,7 @@
   "description": "Nesse conteúdo será apresentado a ideia do que são testes em software no ponto de vista de uma pessoa desenvolvedora com foco em backend utilizando [NodeJS](https://nodejs.org/en). Os conteúdos aqui apresentados foram levantados com base no meu conhecimento adquirido e em conteúdos diversos.",
   "main": "index.js",
   "scripts": {
-    "install": "npm i --prefix js-mysql",
+    "install": "npm i --prefix js-pf-mysql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
