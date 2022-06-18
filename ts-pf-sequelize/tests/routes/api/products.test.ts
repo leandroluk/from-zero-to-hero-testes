@@ -1,8 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const sinon = require('sinon');
-const app = require('../../../src/app');
-const db = require('../../../src/db');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import { Model } from 'sequelize';
+import sinon from 'sinon';
+import app from '../../../src/app';
+import { productModel } from '../../../src/models';
 
 const { expect } = chai;
 
@@ -85,7 +86,7 @@ describe('routes/api/products', () => {
     });
 
     it('should return 404 if product not found', async () => {
-      sinon.stub(db, 'query').resolves([[]]);
+      sinon.stub(productModel, 'findByPk').resolves();
       const url = `${baseUrl}/999`;
 
       const result = await chai
@@ -96,9 +97,8 @@ describe('routes/api/products', () => {
     });
 
     it('should return 204 if remove', async () => {
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[{}]]) //  exists
-        .onCall(1).resolves(); //       remove
+      sinon.stub(productModel, 'findByPk').resolves({} as Model);
+      sinon.stub(productModel, 'destroy').resolves();
 
       const url = `${baseUrl}/1`;
 
@@ -141,8 +141,7 @@ describe('routes/api/products', () => {
 
     it('should return 404 if not found', async () => {
       const url = `${baseUrl}/1`;
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[]]);
+      sinon.stub(productModel, 'findByPk').resolves();
 
       const result = await chai
         .request(app)
@@ -154,10 +153,9 @@ describe('routes/api/products', () => {
 
     it('should return 200 if success', async () => {
       const url = `${baseUrl}/1`;
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[{}]])
-        .onCall(1).resolves()
-        .onCall(2).resolves([[{}]]);
+      const mock = { toJSON: () => ({}) } as Model;
+      sinon.stub(productModel, 'findByPk').resolves(mock);
+      sinon.stub(productModel, 'update').resolves();
 
       const result = await chai
         .request(app)
@@ -184,8 +182,8 @@ describe('routes/api/products', () => {
     });
 
     it('should return 404 if not found', async () => {
-      sinon.stub(db, 'query').resolves([[]]);
       const url = `${baseUrl}/1`;
+      sinon.stub(productModel, 'findByPk').resolves();
 
       const result = await chai
         .request(app)
@@ -195,9 +193,8 @@ describe('routes/api/products', () => {
     });
 
     it('should return 200 if success', async () => {
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[{}]])
-        .onCall(1).resolves([[{}]]);
+      const mock = { toJSON: () => ({}) } as Model;
+      sinon.stub(productModel, 'findByPk').resolves(mock);
       const url = `${baseUrl}/1`;
 
       const result = await chai
@@ -223,16 +220,15 @@ describe('routes/api/products', () => {
     });
 
     it('should return 201 with created product', async () => {
-      const mock = { description: 'a', price: 1, unit: 'a' };
+      const mock = { toJSON: () => ({}) } as Model;
 
-      sinon.stub(db, 'query')
-        .onCall(0).resolves([[{ insertId: 1 }]])
-        .onCall(1).resolves([[{ ...mock, id: 1 }]]);
+      sinon.stub(productModel, 'create').resolves(mock);
+      sinon.stub(productModel, 'findByPk').resolves(mock);
 
       const result = await chai
         .request(app)
         .post(baseUrl)
-        .send(mock);
+        .send({ description: 'a', price: 1, unit: 'a' });
 
       expect(result.status).to.equal(201);
     });
@@ -242,7 +238,7 @@ describe('routes/api/products', () => {
     const baseUrl = '/api/products';
 
     it('should return 200 with products', async () => {
-      sinon.stub(db, 'query').resolves([[]]);
+      sinon.stub(productModel, 'findAll').resolves([]);
 
       const result = await chai
         .request(app)

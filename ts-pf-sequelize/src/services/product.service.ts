@@ -22,8 +22,8 @@ export const productService = {
   }).required()),
 
   async add(data: Product.Add): Promise<Product['id']> {
-    const model = await productModel.create(data);
-    return model.getDataValue('id');
+    const { id } = await productModel.create(data) as unknown as Product;
+    return id;
   },
 
   async exists(id: Product['id']): Promise<void> {
@@ -32,9 +32,10 @@ export const productService = {
   },
 
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
-    const items = await productModel.findAll({ where: { id: arrayOfId } });
+    const items = await productModel
+      .findAll({ where: { id: arrayOfId } }) as unknown as Product[];
     arrayOfId.forEach((id, index) => {
-      if (!items.some((item) => item.getDataValue(id) === id)) {
+      if (!items.some((item) => item.id === id)) {
         throw new NotFoundError(`"product[${index}]" not found.`);
       }
     });

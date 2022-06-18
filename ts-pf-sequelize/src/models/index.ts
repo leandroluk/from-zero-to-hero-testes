@@ -12,9 +12,9 @@ const sequelize = new Sequelize(vars.mysql.uri, {
   },
 });
 
-export const productModel = makeProduct(sequelize)
-export const saleModel = makeSale(sequelize)
-export const saleProductModel = makeSalePoduct(sequelize)
+export const productModel = makeProduct(sequelize);
+export const saleModel = makeSale(sequelize);
+export const saleProductModel = makeSalePoduct(sequelize);
 
 const models = {
   productModel,
@@ -22,4 +22,8 @@ const models = {
   saleProductModel,
 };
 
-export default sequelize
+Object
+  .values(models)
+  .forEach((model) => model.associate?.(model, models));
+
+export default sequelize;

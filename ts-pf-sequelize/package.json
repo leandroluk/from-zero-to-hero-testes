@@ -6,8 +6,8 @@
   "scripts": {
     "nodemon": "nodemon --ext ts --watch src --exec \"ts-node -r dotenv/config src\"",
     "start": "ts-node -r dotenv/config src",
-    "test": "mocha -r ts-node/register tests/**/*.{spec,test}.js --exit",
-    "test:coverage": "nyc mocha -r ts-node/register tests/**/*.{spec,test}.js --exit",
+    "test": "mocha -r ts-node/register tests/**/*.{spec,test}.ts --exit",
+    "test:coverage": "nyc mocha -r ts-node/register tests/**/*.{spec,test}.ts --exit",
     "compose": "docker-compose down && docker-compose up --build -d"
   },
   "keywords": [],

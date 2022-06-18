@@ -4,13 +4,14 @@ import { saleModel, saleProductModel } from '../models';
 import { Indexable, Sale, SaleProduct } from '../types';
 import { runSchema } from './_services';
 
-const productsOfsale2saleProduct = (saleId: Sale['id'], products: Sale.Products) => (
-  products.map(({ id, ...product }) => ({
-    productId: id,
-    saleId,
-    ...product,
-  }))
-)
+const productsOfsale2saleProduct = (
+  saleId: Sale['id'],
+  products: Sale.Products,
+) => products.map(({ id, ...product }) => ({
+  productId: id,
+  saleId,
+  ...product,
+}));
 
 export const saleService = {
   validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
@@ -43,16 +44,15 @@ export const saleService = {
 
   async add(data: Sale.Add) {
     const { products, ...saleData } = data;
-    const model = await saleModel.create(saleData);
-    const id = model.getDataValue('id');
+    const { id } = await saleModel.create(saleData) as unknown as Sale;
     const listOfSaleProduct = productsOfsale2saleProduct(id, products);
     await saleProductModel.bulkCreate(listOfSaleProduct);
     return id;
   },
 
   async exists(id: Sale['id']): Promise<void> {
-    const sale = await saleModel.count({ where: { id } });
-    if (!sale) throw new NotFoundError('"sale" not found.');
+    const item = await saleModel.findByPk(id);
+    if (!item) throw new NotFoundError('"sale" not found.');
   },
 
   async edit(id: Sale['id'], changes: Sale.Edit): Promise<void> {
@@ -72,14 +72,16 @@ export const saleService = {
   async get(id: Sale['id']): Promise<Sale.Full> {
     const saleInstance = await saleModel.findByPk(id);
     const sale = saleInstance?.toJSON();
-    const productInstances = await saleProductModel.findAll({ where: { saleId: id } });
-    const products: SaleProduct[] = productInstances.map((product) => product.toJSON());
+    const productInstances = await saleProductModel
+      .findAll({ where: { saleId: id } });
+    const products: SaleProduct[] = productInstances
+      .map((product) => product.toJSON());
     return { ...sale, products } as Sale.Full;
   },
 
   async list(): Promise<Sale[]> {
     const items = await saleModel.findAll();
-    const sales = items.map(item => item.toJSON())
+    const sales = items.map((item) => item.toJSON());
     return sales as Sale[];
   },
 };
