@@ -16,6 +16,7 @@ describe('routes/index', () => {
 
     it('should return 500 if can\'t connect to db', async () => {
       sinon.stub(sequelize, 'authenticate').rejects();
+      sinon.stub(console, 'error').callsFake(() => { });
       const result = await chai.request(app).get(url);
       expect(result.status).to.equal(500);
     });

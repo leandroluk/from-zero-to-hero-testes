@@ -13,4 +13,4 @@ route.post('/', productController.add);
 
 route.get('/', productController.list);
 
-export default route
+export default route;

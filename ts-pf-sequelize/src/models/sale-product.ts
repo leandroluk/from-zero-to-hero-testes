@@ -6,7 +6,6 @@ import {
 } from 'sequelize';
 import { SequelizeModel } from '../types';
 
-
 const tableName = 'sale_product';
 
 const attributes: ModelAttributes = {

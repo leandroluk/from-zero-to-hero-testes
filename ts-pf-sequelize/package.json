@@ -18,6 +18,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.1",
     "@types/chai-as-promised": "^7.1.5",
     "@types/chai-http": "^4.2.0",
@@ -27,16 +28,20 @@
     "@types/node": "^17.0.40",
     "@types/sequelize": "^4.28.13",
     "@types/sinon": "^10.0.11",
+    "@typescript-eslint/parser": "^5.28.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "chai-http": "^4.3.0",
     "dotenv": "^16.0.1",
+    "eslint": "^8.18.0",
     "eslint-config-trybe-backend-typescript": "^1.0.0",
+    "eslint-plugin-sonarjs": "^0.13.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
     "nyc": "^15.1.0",
     "sequelize-cli": "^6.4.1",
     "sinon": "^14.0.0",
+    "ts-node": "^10.8.1",
     "typescript": "^4.7.4"
   },
   "dependencies": {

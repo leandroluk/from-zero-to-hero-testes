@@ -2,7 +2,11 @@ import { expect, use } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { Model } from 'sequelize';
 import sinon from 'sinon';
-import { saleModel, saleProductModel } from '../../src/models';
+import { NotFoundError } from '../../src/errors';
+import {
+  saleModel,
+  saleProductModel
+} from '../../src/models';
 import { saleService } from '../../src/services';
 import { Sale } from '../../src/types';
 
@@ -38,26 +42,6 @@ describe('services/sale.service', () => {
       sinon.stub(saleProductModel, 'bulkCreate').resolves();
       expect(saleService.add(addMock))
         .to.eventually.be.equal(1);
-    });
-  });
-
-  describe('exists', () => {
-    it('should rejects if saleModel.findByPk throws', () => {
-      sinon.stub(saleModel, 'findByPk').rejects();
-      expect(saleService.exists(1))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if saleModel.findByPk return empty', () => {
-      sinon.stub(saleModel, 'findByPk').resolves();
-      expect(saleService.exists(1))
-        .to.eventually.be.rejected;
-    });
-
-    it('should resolves if success', () => {
-      sinon.stub(saleModel, 'findByPk').resolves({} as Model);
-      expect(saleService.exists(1))
-        .to.eventually.be.undefined;
     });
   });
 
@@ -106,16 +90,36 @@ describe('services/sale.service', () => {
     });
   });
 
+  describe('exists', () => {
+    it('should rejects if saleModel.findByPk throws', () => {
+      sinon.stub(saleModel, 'findByPk').rejects();
+      expect(saleService.exists(1))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if saleModel.findByPk return empty', () => {
+      sinon.stub(saleModel, 'findByPk').resolves();
+      expect(saleService.exists(1))
+        .to.eventually.be.rejectedWith(NotFoundError, '"sale" not found.');
+    });
+
+    it('should resolves if success', () => {
+      sinon.stub(saleModel, 'findByPk').resolves({} as Model);
+      expect(saleService.exists(1))
+        .to.eventually.be.undefined;
+    });
+  });
+
   describe('get', () => {
     const mock = { toJSON: () => ({}) } as unknown as Model;
 
-    it('should rejects if saleModel.get throws', () => {
+    it('should rejects if saleModel.findByPk throws', () => {
       sinon.stub(saleModel, 'findByPk').rejects();
       expect(saleService.get(1))
         .to.eventually.be.rejected;
     });
 
-    it('should rejects if saleProductModel.listBySaleId throws', () => {
+    it('should rejects if saleProductModel.findAll throws', () => {
       sinon.stub(saleModel, 'findByPk').resolves(mock);
       sinon.stub(saleProductModel, 'findAll').rejects();
       expect(saleService.get(1))
@@ -131,7 +135,7 @@ describe('services/sale.service', () => {
   });
 
   describe('list', () => {
-    it('should rejects if saleModel.list throws', () => {
+    it('should rejects if saleModel.findAll throws', () => {
       sinon.stub(saleModel, 'findAll').rejects();
       expect(saleService.list())
         .to.eventually.be.rejected;

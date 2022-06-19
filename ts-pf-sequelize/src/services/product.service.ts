@@ -21,16 +21,6 @@ export const productService = {
     unit: Joi.string().max(20),
   }).required()),
 
-  async add(data: Product.Add): Promise<Product['id']> {
-    const { id } = await productModel.create(data) as unknown as Product;
-    return id;
-  },
-
-  async exists(id: Product['id']): Promise<void> {
-    const item = await productModel.findByPk(id);
-    if (!item) throw new NotFoundError('"product" not found.');
-  },
-
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
     const items = await productModel
       .findAll({ where: { id: arrayOfId } }) as unknown as Product[];
@@ -45,19 +35,28 @@ export const productService = {
     await productModel.update(changes, { where: { id } });
   },
 
+  async add(data: Product.Add): Promise<Product['id']> {
+    const { id } = await productModel.create(data) as unknown as Product;
+    return id;
+  },
+
   async remove(id: Product['id']): Promise<void> {
     await productModel.destroy({ where: { id } });
   },
 
-  async get(id: Product['id']): Promise<Product> {
-    const model = await productModel.findByPk(id);
-    const item = model?.toJSON();
-    return item;
+  async exists(id: Product['id']): Promise<void> {
+    const item = await productModel.findByPk(id);
+    if (!item) throw new NotFoundError('"product" not found.');
   },
 
+  async get(id: Product['id']): Promise<Product> {
+    const product = await productModel
+      .findByPk(id, { raw: true }) as unknown as Product;
+    return product;
+  },
   async list(): Promise<Product[]> {
-    const models = await productModel.findAll();
-    const items = models.map((model) => model.toJSON());
-    return items;
+    const products = await productModel
+      .findAll({ raw: true }) as unknown as Product[];
+    return products;
   },
 };

@@ -14,41 +14,6 @@ describe('controllers/sale.controller', () => {
 
   const req = {} as Request;
 
-  describe('remove', () => {
-    it('should rejects if saleService.validateParamsId throw', () => {
-      sinon.stub(saleService, 'validateParamsId').rejects();
-      const res = makeRes();
-      expect(saleController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if saleService.exists throw', () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').rejects();
-      const res = makeRes();
-      expect(saleController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if saleService.remove throw', () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').resolves();
-      sinon.stub(saleService, 'remove').rejects();
-      const res = makeRes();
-      expect(saleController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should resolve if success', async () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').resolves();
-      sinon.stub(saleService, 'remove').resolves();
-      const res = makeRes();
-      await saleController.remove(req, res);
-      expect(res.sendStatus.getCall(0)).to.be.ok;
-    });
-  });
-
   describe('edit', () => {
     it('should rejects if saleService.validateParamsId throws', () => {
       sinon.stub(saleService, 'validateParamsId').rejects();
@@ -108,41 +73,6 @@ describe('controllers/sale.controller', () => {
     });
   });
 
-  describe('get', () => {
-    it('should rejects if saleService.validateParamsId throws', () => {
-      sinon.stub(saleService, 'validateParamsId').rejects();
-      const res = makeRes();
-      expect(saleController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if saleService.exists throws', () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').rejects();
-      const res = makeRes();
-      expect(saleController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if saleService.get throws', () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').resolves();
-      sinon.stub(saleService, 'get').rejects();
-      const res = makeRes();
-      expect(saleController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should resolves if success', async () => {
-      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'exists').resolves();
-      sinon.stub(saleService, 'get').resolves();
-      const res = makeRes();
-      await saleController.get(req, res);
-      expect(res.json.getCall(0)).to.be.ok;
-    });
-  });
-
   describe('add', () => {
     const mock = { products: [] } as unknown as Sale.Add;
 
@@ -188,6 +118,76 @@ describe('controllers/sale.controller', () => {
       const res = makeRes();
       await saleController.add(req, res);
       expect(res.status.getCall(0).args[0]).to.equal(201);
+      expect(res.json.getCall(0)).to.be.ok;
+    });
+  });
+
+  describe('remove', () => {
+    it('should rejects if saleService.validateParamsId throw', () => {
+      sinon.stub(saleService, 'validateParamsId').rejects();
+      const res = makeRes();
+      expect(saleController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if saleService.exists throw', () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').rejects();
+      const res = makeRes();
+      expect(saleController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if saleService.remove throw', () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').resolves();
+      sinon.stub(saleService, 'remove').rejects();
+      const res = makeRes();
+      expect(saleController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should resolve if success', async () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').resolves();
+      sinon.stub(saleService, 'remove').resolves();
+      const res = makeRes();
+      await saleController.remove(req, res);
+      expect(res.sendStatus.getCall(0)).to.be.ok;
+    });
+  });
+
+  describe('get', () => {
+    it('should rejects if saleService.validateParamsId throws', () => {
+      sinon.stub(saleService, 'validateParamsId').rejects();
+      const res = makeRes();
+      expect(saleController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if saleService.exists throws', () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').rejects();
+      const res = makeRes();
+      expect(saleController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if saleService.get throws', () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').resolves();
+      sinon.stub(saleService, 'get').rejects();
+      const res = makeRes();
+      expect(saleController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should resolves if success', async () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'exists').resolves();
+      sinon.stub(saleService, 'get').resolves();
+      const res = makeRes();
+      await saleController.get(req, res);
       expect(res.json.getCall(0)).to.be.ok;
     });
   });

@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { RequestHandler } from 'express';
 
 export const corsMiddleware: RequestHandler = (_req, res, next) => {
   res.setHeader('access-control-allow-origin', '*');

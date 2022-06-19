@@ -8,4 +8,4 @@ route.use('/products', productRoute);
 
 route.use('/sales', saleRoute);
 
-export default route
+export default route;

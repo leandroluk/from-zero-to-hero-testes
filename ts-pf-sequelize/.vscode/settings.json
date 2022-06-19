@@ -23,6 +23,7 @@
   "javascript.suggestionActions.enabled": false,
   // typescript
   "typescript.suggestionActions.enabled": false,
+  "typescript.preferences.quoteStyle": "single",
   // thunder-client
   "thunder-client.saveToWorkspace": true,
   // barrelr

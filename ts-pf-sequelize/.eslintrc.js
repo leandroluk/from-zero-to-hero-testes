@@ -1,5 +1,13 @@
 module.exports = {
   extends: 'trybe-backend-typescript',
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  rules: {
+    'comma-dangle': 'off',
+  },
   overrides: [
     {
       files: ['./tests/**/*.ts'],

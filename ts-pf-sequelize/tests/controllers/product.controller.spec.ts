@@ -13,41 +13,6 @@ describe('controllers/product.controller', () => {
 
   const req = {} as Request;
 
-  describe('remove', () => {
-    it('should rejects if productService.validateParamsId throws', () => {
-      sinon.stub(productService, 'validateParamsId').rejects();
-      const res = makeRes();
-      expect(productController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if productService.exists throws', () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').rejects();
-      const res = makeRes();
-      expect(productController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if productService.remove throws', () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').resolves();
-      sinon.stub(productService, 'remove').rejects();
-      const res = makeRes();
-      expect(productController.remove(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should response with status 204 if success', async () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').resolves();
-      sinon.stub(productService, 'remove').resolves();
-      const res = makeRes();
-      await productController.remove(req, res);
-      expect(res.sendStatus.getCall(0).args[0]).to.equal(204);
-    });
-  });
-
   describe('edit', () => {
     it('should rejects if productService.validateParamsId throws', () => {
       sinon.stub(productService, 'validateParamsId').rejects();
@@ -107,41 +72,6 @@ describe('controllers/product.controller', () => {
     });
   });
 
-  describe('get', () => {
-    it('should rejects if productService.validateParamsId throws', () => {
-      sinon.stub(productService, 'validateParamsId').rejects();
-      const res = makeRes();
-      expect(productController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if productService.exists throws', () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').rejects();
-      const res = makeRes();
-      expect(productController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should rejects if productService.get throws', () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').resolves();
-      sinon.stub(productService, 'get').rejects();
-      const res = makeRes();
-      expect(productController.get(req, res))
-        .to.eventually.be.rejected;
-    });
-
-    it('should call json if success', async () => {
-      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(productService, 'exists').resolves();
-      sinon.stub(productService, 'get').resolves();
-      const res = makeRes();
-      await productController.get(req, res);
-      expect(res.json.getCall(0)).to.be.ok;
-    });
-  });
-
   describe('add', () => {
     it('should rejects if productService.validateBodyAdd throws', () => {
       sinon.stub(productService, 'validateBodyAdd').rejects();
@@ -175,6 +105,76 @@ describe('controllers/product.controller', () => {
       await productController.add(req, res);
       expect(res.status.getCall(0).args[0]).to.equal(201);
       expect(res.json.getCall(0)).to.ok;
+    });
+  });
+
+  describe('remove', () => {
+    it('should rejects if productService.validateParamsId throws', () => {
+      sinon.stub(productService, 'validateParamsId').rejects();
+      const res = makeRes();
+      expect(productController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if productService.exists throws', () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').rejects();
+      const res = makeRes();
+      expect(productController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if productService.remove throws', () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').resolves();
+      sinon.stub(productService, 'remove').rejects();
+      const res = makeRes();
+      expect(productController.remove(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should response with status 204 if success', async () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').resolves();
+      sinon.stub(productService, 'remove').resolves();
+      const res = makeRes();
+      await productController.remove(req, res);
+      expect(res.sendStatus.getCall(0).args[0]).to.equal(204);
+    });
+  });
+
+  describe('get', () => {
+    it('should rejects if productService.validateParamsId throws', () => {
+      sinon.stub(productService, 'validateParamsId').rejects();
+      const res = makeRes();
+      expect(productController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if productService.exists throws', () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').rejects();
+      const res = makeRes();
+      expect(productController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should rejects if productService.get throws', () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').resolves();
+      sinon.stub(productService, 'get').rejects();
+      const res = makeRes();
+      expect(productController.get(req, res))
+        .to.eventually.be.rejected;
+    });
+
+    it('should call json if success', async () => {
+      sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(productService, 'exists').resolves();
+      sinon.stub(productService, 'get').resolves();
+      const res = makeRes();
+      await productController.get(req, res);
+      expect(res.json.getCall(0)).to.be.ok;
     });
   });
 
