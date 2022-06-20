@@ -79,7 +79,7 @@ Podem existir inúmeros comportamentos dentro da solução sendo que os principa
 
 ### **Como devo testar**
 
-Quando se procura sobre testes na internet sempre surgem artigos que falam sobre  TDD (Test Driven Design), BDD (Behavior Driven Design) e como essas metodologias são boas práticas em desenvolvimento e que toda empresa deveria utilizá-las, mas se uma pessoa não tem experiência em testes e não sabe o que deve testar e como testar, ela não conseguiria aplicar tais metodologias com excelência. Então vamos focar no que realmente definem os testes, a arquitetura dos mesmos, as estruturas funcionais e técnicas utilizadas para simular e validar os comportamentos de um produto.
+Quando se procura sobre testes na internet sempre surgem artigos que falam sobre TDD (Test Driven Design), BDD (Behavior Driven Design) e como essas metodologias são boas práticas em desenvolvimento e que toda empresa deveria utilizá-las, mas se uma pessoa não tem experiência em testes e não sabe o que deve testar e como testar, ela não conseguiria aplicar tais metodologias com excelência. Então vamos focar no que realmente definem os testes, a arquitetura dos mesmos, as estruturas funcionais e técnicas utilizadas para simular e validar os comportamentos de um produto.
 
 Em cada tecnologia se tem uma metodologia diferente para o mesmo, em Angular os testes devem ficar junto dos artefatos que testam, no jest, somos orientados a criar um diretório com o nome "__test__" nos módulos que serão testados, em outras tecnologias haverão outras formas de organizar os testes. 
 

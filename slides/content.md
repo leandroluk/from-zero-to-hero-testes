@@ -168,16 +168,27 @@ const model = {
 ```js
 const service = {
   buildRecoveryEmail(email) {
-    const link = `http://domain.com/recovery?email=${email}`
-    const template = `
-      <html><head></head><body>
-        <p>Click <a href="${link}" target="_blank">here</a> 
-        to recover</p>
-      </body></html>
-    `
-    return template
+    const link = `http://domain.com/recovery?email=${email}`;
+    let tmpl = '<html><head></head><body>';
+    tmpl += '<a href="${link}" target="_blank">Click to recover</a>';
+    tmpl += '</body></html>';
+    return tmpl;
   }
 }
 ```
 
 ---
+
+### **Como devo testar?**
+
+![tdd-bdd-ddd-wtfff](./image/tdd-bdd-ddd-wtfff.jpg){width=30%}
+
+<small>_"Mas eu nem sei testar ainda..."_</small>
+
+--
+
+### **Como devo testar?**
+
+![arrange-act-assert](./image/arrange-act-assert.png)
+
+<small>Simples!</small>

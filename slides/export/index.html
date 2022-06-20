@@ -237,14 +237,11 @@ const model = {
                 <h4><strong>Interpolação de dados (templating):</strong></h4>
 <pre><code class="language-js">const service = {
   buildRecoveryEmail(email) {
-    const link = `http://domain.com/recovery?email=${email}`
-    const template = `
-      &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;
-        &lt;p&gt;Click &lt;a href=&quot;${link}&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt; 
-        to recover&lt;/p&gt;
-      &lt;/body&gt;&lt;/html&gt;
-    `
-    return template
+    const link = `http://domain.com/recovery?email=${email}`;
+    let tmpl = '&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;';
+    tmpl += '&lt;a href=&quot;${link}&quot; target=&quot;_blank&quot;&gt;Click to recover&lt;/a&gt;';
+    tmpl += '&lt;/body&gt;&lt;/html&gt;';
+    return tmpl;
   }
 }
 </code></pre>
@@ -258,10 +255,23 @@ const model = {
 
 
     
+    <section>
         <section >
-            
-            
+            <h3><strong>Como devo testar?</strong></h3>
+<p><img src="./image/tdd-bdd-ddd-wtfff.jpg" alt="tdd-bdd-ddd-wtfff" width="30%"></p>
+<p><small><em>“Mas eu nem sei testar ainda…”</em></small></p>
+
             </section>
+        
+            <section >
+                <h3><strong>Como devo testar?</strong></h3>
+<p><img src="./image/arrange-act-assert.png" alt="arrange-act-assert"></p>
+<p><small>Simples!</small></p>
+
+            </section>
+        
+
+    </section>
     
 
 
