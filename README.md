@@ -87,6 +87,8 @@ Independente da tecnologia, o que devemos levar em consideração é que os test
 
 Olhando os testes, podemos utilizar o método _"Triple A (Arrange, Act, Assert)"_ para estruturar nossos testes. O importante é que cada teste deve ser atômico e não dependente de outros testes ou do resultado dos mesmos, ou seja, não compartilhar o contexto entre os mesmos, pois caso um teste falhe ele pode causar um efeito borboleta em outros testes, trazendo falsos-positivos.
 
+Em backend usamos como stack de testes 4 ferramentas no geral sendo:
+
 - **<u>Mocha:</u>** é um framework construído para a criação e execução de testes.
 - **<u>Chai:</u>** é uma biblioteca para fazer a asserção de resultados.
 - **<u>Sinon:</u>** é uma biblioteca criada para manipular o comportamento de recursos, permitindo simular os resultados de respostas.

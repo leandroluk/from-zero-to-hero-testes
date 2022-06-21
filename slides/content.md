@@ -191,4 +191,35 @@ const service = {
 
 ![arrange-act-assert](./image/arrange-act-assert.png)
 
-<small>Simples!</small>
+<small>O Padrão Triple A - Simples!</small>
+
+--
+
+### **Como devo testar?**
+
+- [**Mocha**](https://mochajs.org)
+- [**Chai** + _Pluggins_](https://www.chaijs.com)
+- [**Sinon**](https://sinonjs.org)
+- [**Nyc**](https://github.com/istanbuljs/nyc)
+
+---
+
+### **Tipos de testes**
+
+**Principais**
+
+- Unitários
+- Integração
+- Ponta
+- Manuais
+
+--
+
+### **Tipos de testes**
+
+**Outros**
+
+- Resiliência
+- Sobrecarga
+- Segurança
+- UI/UX
