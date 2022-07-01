@@ -1,5 +1,4 @@
 const db = require('../db');
-const { empty2null } = require('./_models');
 
 const TABLE = 'sale_product';
 
@@ -10,14 +9,14 @@ const saleProductModel = {
         sale_id, product_id, description, quantity, price, unit
       ) VALUES ?
     `;
-    const rows = items.map((item) => empty2null([
+    const rows = items.map((item) => [
       saleId,
       item.id,
       item.description,
       item.quantity,
       item.price,
       item.unit,
-    ]));
+    ]);
     await db.query(sql, [rows]);
   },
 
