@@ -3,7 +3,6 @@ const {
   objToKeyValues,
   snake2camel,
   camel2snake,
-  empty2null,
 } = require('../../src/models/_models');
 
 describe('models/_models', () => {
@@ -31,15 +30,6 @@ describe('models/_models', () => {
       const expected = 'camel_case';
       const result = camel2snake(value);
       expect(result).to.equal(expected);
-    });
-  });
-
-  describe('empty2null', () => {
-    it('should swap undefined or null value to \'NULL\'', () => {
-      const arr = [1, 'a', true, undefined, null];
-      const expected = [1, 'a', true, 'NULL', 'NULL'];
-      const result = empty2null(arr);
-      expect(result).to.deep.equal(expected);
     });
   });
 });

@@ -12,13 +12,13 @@ describe('models/product.model', () => {
   describe('add', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.add({}))
+      return expect(productModel.add({}))
         .to.eventually.be.rejected;
     });
 
     it('should return insertId if sucess', () => {
       sinon.stub(db, 'query').resolves([{ insertId: 1 }]);
-      expect(productModel.add({}))
+      return expect(productModel.add({}))
         .to.eventually.be.equal(1);
     });
   });
@@ -41,13 +41,13 @@ describe('models/product.model', () => {
 
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.edit(id, changes))
+      return expect(productModel.edit(id, changes))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves();
-      expect(productModel.edit(id, changes))
+      return expect(productModel.edit(id, changes))
         .to.eventually.be.undefined;
     });
   });
@@ -55,13 +55,13 @@ describe('models/product.model', () => {
   describe('remove', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.remove(0))
+      return expect(productModel.remove(0))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves();
-      expect(productModel.remove(0))
+      return expect(productModel.remove(0))
         .to.eventually.be.undefined;
     });
   });
@@ -69,13 +69,13 @@ describe('models/product.model', () => {
   describe('list', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.list())
+      return expect(productModel.list())
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves([[{ id: 1 }]]);
-      expect(productModel.list())
+      return expect(productModel.list())
         .to.eventually.be.deep.equal([{ id: 1 }]);
     });
   });
@@ -83,13 +83,13 @@ describe('models/product.model', () => {
   describe('listByArrayOfId', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.listByArrayOfId([]))
+      return expect(productModel.listByArrayOfId([]))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves([[{ id: 1 }]]);
-      expect(productModel.listByArrayOfId([]))
+      return expect(productModel.listByArrayOfId([]))
         .to.eventually.be.equal([{ id: 1 }]);
     });
   });
@@ -97,13 +97,13 @@ describe('models/product.model', () => {
   describe('get', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(productModel.get(1))
+      return expect(productModel.get(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves([[{ id: 1 }]]);
-      expect(productModel.get(1))
+      return expect(productModel.get(1))
         .to.eventually.be.deep.equal({ id: 1 });
     });
   });

@@ -1,6 +1,17 @@
 const db = require('../db');
+const { selectSnakeAsCamel } = require('./_models');
 
 const TABLE = 'sale_product';
+
+const FIELDS = {
+  id: 'id',
+  saleId: 'sale_id',
+  productId: 'product_id',
+  description: 'description',
+  quantity: 'quantity',
+  price: 'price',
+  unit: 'unit',
+};
 
 const saleProductModel = {
   async bulkAddBySaleId(saleId, items) {
@@ -30,14 +41,7 @@ const saleProductModel = {
 
   async listBySaleId(saleId) {
     const sql = `
-      SELECT
-        id,
-        sale_id AS saleId,
-        product_id AS productId,
-        description,
-        quantity,
-        price,
-        unit
+      SELECT ${selectSnakeAsCamel(FIELDS)}
       FROM ${TABLE}
       WHERE sale_id = ?
     `;

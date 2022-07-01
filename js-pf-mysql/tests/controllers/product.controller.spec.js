@@ -14,7 +14,7 @@ describe('controllers/product.controller', () => {
     it('should rejects if productService.validateParamsId throws', () => {
       sinon.stub(productService, 'validateParamsId').rejects();
       const res = makeRes();
-      expect(productController.remove({}, res))
+      return expect(productController.remove({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -22,7 +22,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
       sinon.stub(productService, 'exists').rejects();
       const res = makeRes();
-      expect(productController.remove({}, res))
+      return expect(productController.remove({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -31,7 +31,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'exists').resolves();
       sinon.stub(productService, 'remove').rejects();
       const res = makeRes();
-      expect(productController.remove({}, res))
+      return expect(productController.remove({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -50,7 +50,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateParamsId').rejects();
       sinon.stub(productService, 'validateBodyEdit').resolves();
       const res = makeRes();
-      expect(productController.edit({}, res))
+      return expect(productController.edit({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -58,7 +58,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
       sinon.stub(productService, 'validateBodyEdit').rejects();
       const res = makeRes();
-      expect(productController.edit({}, res))
+      return expect(productController.edit({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -67,7 +67,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateBodyEdit').resolves();
       sinon.stub(productService, 'exists').rejects();
       const res = makeRes();
-      expect(productController.edit({}, res))
+      return expect(productController.edit({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -77,7 +77,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'exists').resolves();
       sinon.stub(productService, 'edit').resolves();
       const res = makeRes();
-      expect(productController.edit({}, res))
+      return expect(productController.edit({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -88,7 +88,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'edit').resolves();
       sinon.stub(productService, 'get').rejects();
       const res = makeRes();
-      expect(productController.edit({}, res))
+      return expect(productController.edit({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -108,7 +108,7 @@ describe('controllers/product.controller', () => {
     it('should rejects if productService.validateParamsId throws', () => {
       sinon.stub(productService, 'validateParamsId').rejects();
       const res = makeRes();
-      expect(productController.get({}, res))
+      return expect(productController.get({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -116,7 +116,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
       sinon.stub(productService, 'exists').rejects();
       const res = makeRes();
-      expect(productController.get({}, res))
+      return expect(productController.get({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -125,7 +125,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'exists').resolves();
       sinon.stub(productService, 'get').rejects();
       const res = makeRes();
-      expect(productController.get({}, res))
+      return expect(productController.get({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -143,7 +143,7 @@ describe('controllers/product.controller', () => {
     it('should rejects if productService.validateBodyAdd throws', () => {
       sinon.stub(productService, 'validateBodyAdd').rejects();
       const res = makeRes();
-      expect(productController.add({}, res))
+      return expect(productController.add({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -151,7 +151,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateBodyAdd').resolves();
       sinon.stub(productService, 'add').rejects();
       const res = makeRes();
-      expect(productController.add({}, res))
+      return expect(productController.add({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -160,7 +160,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'add').resolves();
       sinon.stub(productService, 'get').rejects();
       const res = makeRes();
-      expect(productController.add({}, res))
+      return expect(productController.add({}, res))
         .to.eventually.be.rejected;
     });
 
@@ -179,7 +179,7 @@ describe('controllers/product.controller', () => {
     it('should rejects if productService.list throws', () => {
       sinon.stub(productService, 'list').rejects();
       const res = makeRes();
-      expect(productController.list({}, res))
+      return expect(productController.list({}, res))
         .to.eventually.be.rejected;
     });
 

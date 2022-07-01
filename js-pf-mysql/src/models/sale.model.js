@@ -1,11 +1,13 @@
 const db = require('../db');
-const {
-  objToKeyValues,
-  camel2snake,
-  empty2null,
-} = require('./_models');
+const { camelFields2Snake, selectSnakeAsCamel } = require('./_models');
 
 const TABLE = 'sale';
+
+const FIELDS = {
+  id: 'id',
+  sellerName: 'seller_name',
+  purchaserName: 'purchaser_name',
+};
 
 const saleModel = {
   async add(data) {
@@ -14,22 +16,21 @@ const saleModel = {
         seller_name, purchaser_name
       ) VALUES ?;
     `;
-    const row = empty2null([
+    const row = [
       data.sellerName,
       data.purchaserName,
-    ]);
+    ];
     const [{ insertId }] = await db.query(sql, [[row]]);
     return insertId;
   },
 
   async edit(id, changes) {
-    const [keys, values] = objToKeyValues(changes);
     const sql = `
       UPDATE ${TABLE} 
-      SET ${keys.map((key) => `${camel2snake(key)} = ?`).join()} 
+      SET ?
       WHERE id = ?;
     `;
-    await db.query(sql, [...empty2null(values), id]);
+    await db.query(sql, [camelFields2Snake(changes, FIELDS), id]);
   },
 
   async remove(id) {
@@ -39,10 +40,7 @@ const saleModel = {
 
   async list() {
     const sql = `
-      SELECT
-        id,
-        seller_name AS 'sellerName',
-        purchaser_name AS 'purchaserName'
+      SELECT ${selectSnakeAsCamel(FIELDS)}
       FROM ${TABLE}
     `;
     const [rows] = await db.query(sql);
@@ -51,10 +49,7 @@ const saleModel = {
 
   async get(id) {
     const sql = `
-      SELECT
-        id,
-        seller_name AS 'sellerName',
-        purchaser_name AS 'purchaserName'
+      SELECT ${selectSnakeAsCamel(FIELDS)}
       FROM ${TABLE} 
       WHERE id = ?
     `;

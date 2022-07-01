@@ -25,13 +25,13 @@ describe('models/sale-product.model', () => {
 
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(saleProductModel.bulkAddBySaleId(1, items))
+      return expect(saleProductModel.bulkAddBySaleId(1, items))
         .to.eventually.be.rejected;
     });
 
     it('should resolve undefined if success', () => {
       sinon.stub(db, 'query').resolves();
-      expect(saleProductModel.bulkRemoveBySaleId(1, items))
+      return expect(saleProductModel.bulkRemoveBySaleId(1, items))
         .to.eventually.be.undefined;
     });
   });
@@ -39,13 +39,13 @@ describe('models/sale-product.model', () => {
   describe('bulkRemoveBySaleId', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(saleProductModel.bulkRemoveBySaleId(1))
+      return expect(saleProductModel.bulkRemoveBySaleId(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves();
-      expect(saleProductModel.bulkRemoveBySaleId(1))
+      return expect(saleProductModel.bulkRemoveBySaleId(1))
         .to.eventually.be.undefined;
     });
   });
@@ -53,13 +53,13 @@ describe('models/sale-product.model', () => {
   describe('listBySaleId', () => {
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
-      expect(saleProductModel.listBySaleId(1))
+      return expect(saleProductModel.listBySaleId(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves([[]]);
-      expect(saleProductModel.listBySaleId(1))
+      return expect(saleProductModel.listBySaleId(1))
         .to.eventually.be.deep.equal([]);
     });
   });

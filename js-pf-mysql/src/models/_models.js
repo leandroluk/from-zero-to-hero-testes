@@ -1,36 +1,25 @@
 /**
- * @param {Record<string, any>} obj
- * @return {[string[], any[]]}
+ * @param {Record<string, any>} obj 
+ * @param {Record<string, string} snakeFields 
+ * @return {Record<string, any>}
  */
-const objToKeyValues = (obj) => Object
-  .entries(obj)
-  .filter(([key]) => key)
-  .reduce((arr, items) => {
-    arr[0].push(items[0]);
-    arr[1].push(items[1]);
-    return arr;
-  }, [[], []]);
+const camelFields2Snake = (obj, fields) => Object
+  .keys(obj)
+  .reduce((newObj, field) => ({
+    ...newObj, [fields[field] || field]: obj[field],
+  }), {});
 
 /**
- * @param {string} str 
- * @returns {string}
+ * @param {Record<string, any>} obj 
+ * @param {Record<string, string} snakeFields 
+ * @return {string}
  */
-const snake2camel = (str) => str
-  .replace(/_+(.?)/g, (_, $1) => $1.toUpperCase());
-
-/**
- * @param {string} str 
- * @returns {string}
- */
-const camel2snake = (str) => str
-  .replace(/([A-Z]+)/g, (_, $1) => `_${$1.toLowerCase()}`);
-
-const empty2null = (arr) => arr
-  .map((value) => ([undefined, null].includes(value) ? 'NULL' : value));
+const selectSnakeAsCamel = (fields) => Object
+  .entries(fields)
+  .map(([key, value]) => `\`${value}\` AS \`${key}\``)
+  .join(', ');
 
 module.exports = {
-  objToKeyValues,
-  snake2camel,
-  camel2snake,
-  empty2null,
+  camelFields2Snake,
+  selectSnakeAsCamel,
 };
