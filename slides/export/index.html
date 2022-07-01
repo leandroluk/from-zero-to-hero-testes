@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>🚀 From Zero to Hero - Testes no Backend 🚀</title>
+
+	<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+	<meta name="author" content="Hakim El Hattab">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/reset.css">
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/reveal.css">
+
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+	  <!-- highlight Theme -->
+  	
+	  <link rel="stylesheet" href="libs/highlight.js/11.3.1/styles/monokai.min.css">
+	
+	
+		
+	<link rel="stylesheet" href="libs/reveal.js/4.3.1/plugin/chalkboard/style.css">
+	
+	
+	
+	
+
+
+
+  <!-- Revealjs Theme -->
+  
+  	<link rel="stylesheet" href="libs/reveal.js/4.3.1/theme/night.css" id="theme">
+  
+  
+
+  <link rel="stylesheet" href="libs/styles/tasklist.css">
+	<link rel="stylesheet" href="libs/styles/iota.css">
+	<link rel="stylesheet" href="libs/styles/layout.css">
+
+
+  <!-- Revealjs Theme -->
+  
+
+   <!-- css list -->
+	
+
+</head>
+
+<body>
+  
+
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+        <section >
+            
+            <h3><strong>🚀 From Zero to Hero 🚀</strong></h3>
+<h4>Testes no Backend</h4>
+
+            </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>O que são testes?</strong></h3>
+<p><img src="./image/common-agile-process.png" alt="common-agile-process"></p>
+<p><small>Fluxograma básico do processo ágil.</small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>O que são testes?</strong></h3>
+<p><img src="./image/old-develop-process.png" alt="old-develop-process"></p>
+<p><small>Antigo processo de desenvolvimento.</small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>O que são testes?</strong></h3>
+<p><img src="./image/client-rage-work.gif" alt="client-rage-phone"></p>
+<p><small>Garantia de qualidade e confiabilidade.</small></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>Porque testar?</strong></h3>
+<p><img src="./image/futurama-take-my-money.gif" alt="futurama-take-my-money"></p>
+<p><small><em>“Queremos o melhor pelo o menor custo!”</em></small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>Porque testar?</strong></h3>
+<p><img src="./image/futurama-serious.gif" alt="futurama-serious"></p>
+<p><small><em>“Será que o que eu comprei realmente está me atendendo?”</em></small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>Porque testar?</strong></h3>
+<p><img src="./image/bug-price-by-stage.png" alt="bug-price-by-stage" width="65%"></p>
+<p><small>Quanto mais rápido identificado o bug, menor preço.</small></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>Quando devo testar</strong></h3>
+<p><img src="./image/tests-everywhere.jpg" alt="tests-everywhere"></p>
+<p><small>Todo teste tem seu custo para ser criado.</small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>Quando devo testar</strong></h3>
+<p><img src="./image//features-plus-tests-equal-software.png" alt="features-plus-tests-equal-software.png"></p>
+<p><small>Testes devem ser feitos com eficiência, inteligência e coerência.</small></p>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>O que devo testar?</strong></h3>
+<p><img src="./image/behavior-family-guys.webp" alt="behavior-family-guys"></p>
+<p><small>Os comportamentos que “aquilo” se propôe a executar!</small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>O que devo testar?</strong></h3>
+<br/>
+<ul>
+<li><strong>Chamada de função (call)</strong></li>
+<li><strong>Cálculos matemáticos (math):</strong></li>
+<li><strong>Operadores de condição (condition):</strong></li>
+<li><strong>Estrutura de dados (typing):</strong></li>
+<li><strong>Interpolação de dados (templating):</strong></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h4><strong>Chamada de função (call)</strong></h4>
+<pre><code class="language-js">const model = {
+  async getById(id) { /* ... */ }
+}
+const service = {
+  async getById(id) {
+    const result = await model.getById(id);
+    if(!result) throw new Error('not found');
+    return result;
+  }
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><strong>Cálculos matemáticos (math):</strong></h4>
+<pre><code class="language-js">const service = {
+  async checkIsAdult(birthDate) {
+    const diff = new Date(Date.now() - birthDate.getTime());
+    const year = diff.getUTCFullYear();
+    const age = Math.abs(year - 1970);
+    return age;
+  }
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><strong>Operadores de condição (condition):</strong></h4>
+<pre><code class="language-js">const service = {
+  async checkImc(value) {
+    if(value &lt; 18.5) return 'Under weight';
+    if(value &lt; 25) return 'Normal';
+    if(value &lt; 30) return 'Over weight';
+    if(value &lt; 35) return 'Obese I';
+    if(value &lt; 40) return 'Obese II';
+    return 'Obese III';
+  }
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><strong>Estrutura de dados (typing):</strong></h4>
+<pre><code class="language-js">const connection = require('./connection'); // using mysql
+const model = {
+  async getById(id) {
+    const sql = 'SELECT * FROM table WHERE id = ?';
+    const [[row]] = await connection.query(sql, [id]);
+    return row;
+  }
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><strong>Interpolação de dados (templating):</strong></h4>
+<pre><code class="language-js">const service = {
+  buildRecoveryEmail(email) {
+    const link = `http://domain.com/recovery?email=${email}`;
+    let tmpl = '&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;';
+    tmpl += '&lt;a href=&quot;${link}&quot; target=&quot;_blank&quot;&gt;Click to recover&lt;/a&gt;';
+    tmpl += '&lt;/body&gt;&lt;/html&gt;';
+    return tmpl;
+  }
+}
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>Como devo testar?</strong></h3>
+<p><img src="./image/tdd-bdd-ddd-wtfff.jpg" alt="tdd-bdd-ddd-wtfff" width="30%"></p>
+<p><small><em>“Mas eu nem sei testar ainda…”</em></small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>Como devo testar?</strong></h3>
+<p><img src="./image/arrange-act-assert.png" alt="arrange-act-assert"></p>
+<p><small>O Padrão Triple A - Simples!</small></p>
+
+            </section>
+        
+            <section >
+                <h3><strong>Como devo testar?</strong></h3>
+<ul>
+<li><a href="https://mochajs.org"><strong>Mocha</strong></a></li>
+<li><a href="https://www.chaijs.com"><strong>Chai</strong> + <em>Pluggins</em></a></li>
+<li><a href="https://sinonjs.org"><strong>Sinon</strong></a></li>
+<li><a href="https://github.com/istanbuljs/nyc"><strong>Nyc</strong></a></li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h3><strong>Tipos de testes</strong></h3>
+<p><strong>Principais</strong></p>
+<ul>
+<li>Unitários</li>
+<li>Integração</li>
+<li>Ponta</li>
+<li>Manuais</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h3><strong>Tipos de testes</strong></h3>
+<p><strong>Outros</strong></p>
+<ul>
+<li>Resiliência</li>
+<li>Sobrecarga</li>
+<li>Segurança</li>
+<li>UI/UX</li>
+</ul>
+
+            </section>
+        
+
+    </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  	
+	<script src="libs/reveal.js/4.1.3/reveal.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/zoom/zoom.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/notes/notes.js"></script>
+	
+	<script src="libs/reveal.js/4.1.3/plugin/markdown/markdown.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/highlight/highlight.js"></script>
+	
+	<script src="libs/reveal.js/4.1.3/plugin/math/math.js"></script>
+
+	<script src="libs/reveal.js/4.1.3/plugin/fullscreen/plugin.js"></script>
+  
+  	<script src="libs/reveal.js/4.1.3/plugin/animate/plugin.js"></script>
+  	<script src="libs/reveal.js/4.1.3/plugin/animate/svg.min.js"></script>
+  
+  	<script src="libs/reveal.js/4.1.3/plugin/anything/plugin.js"></script>
+	  <script src="libs/reveal.js/4.1.3/plugin/anything/Chart.min.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/anything/d3/d3.v3.min.js"></script>				
+	<script src="libs/reveal.js/4.1.3/plugin/anything/d3.patch.js"></script>			
+	<script src="libs/reveal.js/4.1.3/plugin/anything/d3/queue.v1.min.js"></script>		
+	<script src="libs/reveal.js/4.1.3/plugin/anything/d3/topojson.v1.min.js"></script>		
+	<script src="libs/reveal.js/4.1.3/plugin/anything/function-plot.js"></script>
+
+ <!--	<script src="libs/reveal.js/4.1.3/plugin/audio-slideshow/plugin.js"></script>  -->
+<!--	<script src="libs/reveal.js/4.1.3/plugin/audio-slideshow/recorder.js"></script>-->
+<!--	<script src="libs/reveal.js/4.1.3/plugin/audio-slideshow/RecordRTC.js"></script>-->
+
+
+	<script src="libs/reveal.js/4.1.3/plugin/customcontrols/plugin.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/embed-tweet/plugin.js"></script>
+
+	<script src="libs/reveal.js/4.1.3/plugin/chart/chart.min.js"></script>
+	<script src="libs/reveal.js/4.1.3/plugin/chart/plugin.js"></script>
+
+<script src="libs/reveal.js/4.1.3/plugin/verticator/verticator.js"></script>
+  <script>
+
+		const printPlugins = [
+			RevealNotes, 
+			RevealHighlight,
+			RevealMath,
+			RevealAnimate,
+			
+			RevealEmbedTweet,
+			RevealChart,
+		];
+
+		const plugins =  [...printPlugins,
+		RevealZoom, 
+		
+				RevealMarkdown, 
+				
+				RevealFullscreen,
+				RevealAnything,
+				//RevealAudioSlideshow,
+				//RevealAudioRecorder,
+				
+				// poll
+				// question
+				// seminar
+				Verticator 
+				 ]
+
+
+		// Also available as an ES module, see:
+		// https://revealjs.com/initialization/
+		Reveal.initialize({
+			controls: true,
+			controlsTutorial: true,
+			controlsLayout: 'bottom-right',
+			controlsBackArrows: 'faded',
+			progress: true,
+			slideNumber: false,
+			//#showSlideNumber "all" "print" "speaker"
+			hash: true,//#  hash: false,
+			//# respondToHashChanges: true,
+			//# history: false,
+			keyboard: true,
+			//#keyboardCondition: null,
+			overview: true,
+			center: true,
+			touch: true,
+			loop: false,
+			rtl: false,
+			//#navigationMode: 'default', linear grid
+			shuffle: false,
+			fragments: true,
+			fragmentInURL: false,
+			embedded: false,
+			help: true,
+			//#pause: true
+			showNotes: false,
+			autoPlayMedia: false, // TODO fix this to a nullable value
+			//#preloadIframes: null. true false
+			//#autoAnimate: true
+			//#autoAnimateMatcher: null,
+			//#autoAnimateEasing: 'ease',
+			//autoAnimateDuration: 1.0,
+			//#autoAnimateUnmatched: true
+			//#autoAnimateStyles: []
+			autoSlide: 0, // TODO fix this to a falseable value
+			autoSlideStoppable: true,
+			autoSlideMethod: '0',
+			defaultTiming: 120,
+			mouseWheel: false,
+			//#previewLinks: false
+			//#postMessage: true,  // TODO : this can cause issues with the vscode api ???
+			//#postMessageEvents: false,
+			//#focusBodyOnPageVisibilityChange: true,
+			transition: 'slide',
+			transitionSpeed: 'default',
+			backgroundTransition: 'fade',
+			//#pdfMaxPagesPerSlide: Number.POSITIVE_INFINITY,
+			//#pdfSeparateFragments: true,
+			//#pdfPageHeightOffset: -1,
+			viewDistance: 3,
+			//#mobileViewDistance: 2,
+			display: 'block',
+			//#hideInactiveCursor: true,
+			//#hideCursorTime: 5000
+
+			// Parallax Background
+			parallaxBackgroundImage: '',
+			parallaxBackgroundSize: '',
+			parallaxBackgroundHorizontal: 0,
+			parallaxBackgroundVertical: 0,
+			
+			//Presentation Size
+			width: 960,
+			height: 700,
+			margin: 0.04,
+			minScale: 0.2,
+			maxScale: 2,
+			disableLayout: false,
+
+			audio: {
+				prefix: 'audio/', 	// audio files are stored in the "audio" folder
+				suffix: '.ogg',		// audio files have the ".ogg" ending
+				textToSpeechURL: null,  // the URL to the text to speech converter
+				defaultNotes: false, 	// use slide notes as default for the text to speech converter
+				defaultText: false, 	// use slide text as default for the text to speech converter
+				advance: 0, 		// advance to next slide after given time in milliseconds after audio has played, use negative value to not advance
+				autoplay: false,	// automatically start slideshow
+				defaultDuration: 5,	// default duration in seconds if no audio is available
+				defaultAudios: true,	// try to play audios with names such as audio/1.2.ogg
+				playerOpacity: 0.05,	// opacity value of audio player if unfocused
+				playerStyle: 'position: fixed; bottom: 4px; left: 25%; width: 50%; height:75px; z-index: 33;', // style used for container of audio controls
+				startAtFragment: false, // when moving to a slide, start at the current fragment or at the start of the slide
+			},
+			
+			customcontrols: {
+					controls: [
+      						{
+						  id: 'toggle-overview',
+						  title: 'Toggle overview (O)',
+						  icon: '<i class="fa fa-th"></i>',
+						  action: 'Reveal.toggleOverview();'
+						}
+						
+				]
+			},
+			chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+			},
+			math: {
+				mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+				config: 'TeX-AMS_HTML-full',
+				// pass other options into `MathJax.Hub.Config()`
+				TeX: { Macros: { RR: "{\\bf R}" } }
+				},
+				anything: [ 
+				{
+		className: "plot",
+		defaults: {width:500, height: 500, grid:true},
+		initialize: (function(container, options){ options.target = "#"+container.id; functionPlot(options) })
+	 },
+	 {
+		className: "chart",  
+		initialize: (function(container, options){ container.chart = new Chart(container.getContext("2d"), options);  })
+	 },
+	 {
+		className: "anything",
+		initialize: (function(container, options){ if (options && options.initialize) { options.initialize(container)} })
+	 },
+					],
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: (window.location.search.match(/print-pdf/gi) ? printPlugins : plugins ) 
+		});
+			
+
+
+	    // Change chalkboard theme : 
+		function changeTheme(input) {
+			var config = {};
+			config.theme = input.value;
+			Reveal.getPlugin("RevealChalkboard").configure(config);
+			input.blur();
+		}
+
+		// // Handle the message inside the webview
+        // window.addEventListener('message', event => {
+
+        //     const message = event.data; // The JSON data our extension sent
+
+        //     switch (message.command) {
+        //         case 'refactor':
+        //             Reveal.toggleHelp();
+        //     }
+        // });
+
+		if (window.location.search.match(/print-pdf-now/gi)) {
+      		setTimeout(() => {
+				window.print();
+			  }, 2500);
+			
+    }
+		
+
+	</script>
+
+</body>
+
+</html>
