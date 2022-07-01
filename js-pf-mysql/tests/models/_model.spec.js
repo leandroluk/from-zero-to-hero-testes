@@ -1,35 +1,22 @@
 const { expect } = require('chai');
 const {
-  objToKeyValues,
-  snake2camel,
-  camel2snake,
+  camelFields2Snake,
+  selectSnakeAsCamel,
 } = require('../../src/models/_models');
 
 describe('models/_models', () => {
-  describe('objToKeyValues', () => {
-    it('should return a tuple with array of keys and array of values', () => {
-      const value = { foo: 1, bar: 'test', bin: true };
-      const expected = [['foo', 'bar', 'bin'], [1, 'test', true]];
-      const result = objToKeyValues(value);
-      expect(result).to.deep.equal(expected);
+  describe('camelFields2Snake', () => {
+    it('should transform keys from camel case to snake case', () => {
+      const FIELDS = { keyA: 'key_a' };
+      const obj = { keyA: 1 };
+      expect(camelFields2Snake(obj, FIELDS).key_a).to.equal(1);
     });
   });
 
-  describe('snake2camel', () => {
-    it('should transform snake case to camel case', () => {
-      const value = 'snake_case';
-      const expected = 'snakeCase';
-      const result = snake2camel(value);
-      expect(result).to.equal(expected);
-    });
-  });
-
-  describe('camel2snake', () => {
-    it('should transform camel case to snake case', () => {
-      const value = 'camelCase';
-      const expected = 'camel_case';
-      const result = camel2snake(value);
-      expect(result).to.equal(expected);
+  describe('selectSnakeAsCamel', () => {
+    it('should create select AS pattern', () => {
+      const FIELDS = { keyA: 'key_a' };
+      expect(selectSnakeAsCamel(FIELDS)).to.equal('`key_a` AS `keyA`');
     });
   });
 });

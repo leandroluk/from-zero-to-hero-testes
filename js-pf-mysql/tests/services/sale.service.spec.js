@@ -67,7 +67,7 @@ describe('services/sale.service', () => {
     it('should rejects if saleProductModel.bulkRemoveBySaleId throws', () => {
       sinon.stub(saleModel, 'edit').resolves();
       sinon.stub(saleProductModel, 'bulkRemoveBySaleId').rejects();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, { products: [] }))
         .to.eventually.be.rejected;
     });
 
@@ -75,7 +75,7 @@ describe('services/sale.service', () => {
       sinon.stub(saleModel, 'edit').resolves();
       sinon.stub(saleProductModel, 'bulkRemoveBySaleId').resolves();
       sinon.stub(saleProductModel, 'bulkAddBySaleId').rejects();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, { products: [] }))
         .to.eventually.be.rejected;
     });
 

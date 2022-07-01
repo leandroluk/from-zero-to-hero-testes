@@ -30,15 +30,6 @@ describe('models/product.model', () => {
       otherField: 'otherField',
     };
 
-    it('should interpolate camelCase keys as snake_case keys', async () => {
-      const queryStub = sinon.stub(db, 'query').resolves();
-      const matcher = 'camel_case = ?,other_field = ?';
-      await productModel.edit(id, changes);
-      const { args } = queryStub.getCall(0);
-      expect(args[0]).to.includes(matcher);
-      expect(args[1]).to.deep.equal(['camelCase', 'otherField', 1]);
-    });
-
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
       return expect(productModel.edit(id, changes))
@@ -90,7 +81,7 @@ describe('models/product.model', () => {
     it('should resolves if success', () => {
       sinon.stub(db, 'query').resolves([[{ id: 1 }]]);
       return expect(productModel.listByArrayOfId([]))
-        .to.eventually.be.equal([{ id: 1 }]);
+        .to.eventually.deep.equal([{ id: 1 }]);
     });
   });
 

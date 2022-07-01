@@ -7,7 +7,6 @@ describe('models/sale-product.model', () => {
   beforeEach(sinon.restore);
 
   describe('bulkAddBySaleId', () => {
-    const saleId = 1;
     const items = [{
       id: 2,
       description: 'a',
@@ -15,13 +14,6 @@ describe('models/sale-product.model', () => {
       price: 4.56,
       unit: null,
     }];
-
-    it('should map to add using sale id', async () => {
-      const queryStub = sinon.stub(db, 'query').resolves();
-      const expected = [[[1, 2, 'a', 3, 4.56, 'NULL']]];
-      await saleProductModel.bulkAddBySaleId(saleId, items);
-      expect(queryStub.getCall(0).args[1]).to.deep.equal(expected);
-    });
 
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();

@@ -30,15 +30,6 @@ describe('models/sale.model', () => {
       otherField: 'otherField',
     };
 
-    it('should interpolate camelCase keys as snake_case keys', async () => {
-      const queryStub = sinon.stub(db, 'query').resolves();
-      const matcher = 'camel_case = ?,other_field = ?';
-      await saleModel.edit(id, changes);
-      const { args } = queryStub.getCall(0);
-      expect(args[0]).to.includes(matcher);
-      expect(args[1]).to.deep.equal(['camelCase', 'otherField', 1]);
-    });
-
     it('should rejects if db throws', () => {
       sinon.stub(db, 'query').rejects();
       return expect(saleModel.edit(id, changes))

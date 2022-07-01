@@ -33,8 +33,7 @@ describe('services/product.service', () => {
   describe('exists', () => {
     it('should rejects if productModel.get throws', () => {
       sinon.stub(productModel, 'get').rejects();
-      return expect(productService.exists(1))
-        .to.eventually.be.rejected;
+      return expect(productService.exists(1)).to.eventually.be.rejected;
     });
 
     it('should rejects if productModel.get return empty', () => {
@@ -106,9 +105,9 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'get').resolves();
+      sinon.stub(productModel, 'get').resolves({});
       return expect(productService.get(1))
-        .to.eventually.be.ok;
+        .to.eventually.deep.equal({});
     });
   });
 
@@ -120,9 +119,9 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'list').resolves();
+      sinon.stub(productModel, 'list').resolves([]);
       return expect(productService.list())
-        .to.eventually.be.ok;
+        .to.eventually.deep.equal([]);
     });
   });
 });
