@@ -1,13 +1,13 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
-const app = require('../../../src/app');
-const db = require('../../../src/db');
+const app = require('../../src/app');
+const db = require('../../src/db');
 const {
   invaliParamIdList,
   invalidAddProductList,
   invalidEditProductList,
-} = require('../../_mocks/product.mock');
+} = require('../_mocks/product.mock');
 
 const { expect } = chai;
 
