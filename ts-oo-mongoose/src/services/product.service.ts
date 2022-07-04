@@ -6,7 +6,7 @@ import { runSchema } from './_services';
 
 export const productService = {
   validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.number().required().positive().integer(),
+    id: Joi.string().required().length(24),
   }).required()),
 
   validateBodyAdd: runSchema<AddProduct>(Joi.object<AddProduct>({
@@ -23,7 +23,7 @@ export const productService = {
 
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
     const items = await productModel
-      .find({ id: arrayOfId }) as Product[];
+      .find({ _id: arrayOfId }) as Product[];
     arrayOfId.forEach((id, index) => {
       if (!items.some((item) => item.id === id)) {
         throw new NotFoundError(`"product[${index}]" not found.`);
@@ -31,8 +31,8 @@ export const productService = {
     });
   },
 
-  async edit(id: Product['id'], changes: EditProduct): Promise<void> {
-    await productModel.updateOne({ id }, changes);
+  async edit(_id: Product['id'], changes: EditProduct): Promise<void> {
+    await productModel.updateOne({ _id }, changes);
   },
 
   async add(data: AddProduct): Promise<Product['id']> {
@@ -40,17 +40,17 @@ export const productService = {
     return id;
   },
 
-  async remove(id: Product['id']): Promise<void> {
-    await productModel.deleteOne({ where: { id } });
+  async remove(_id: Product['id']): Promise<void> {
+    await productModel.deleteOne({ _id });
   },
 
-  async exists(id: Product['id']): Promise<void> {
-    const count = await productModel.count({ id });
+  async exists(_id: Product['id']): Promise<void> {
+    const count = await productModel.count({ _id });
     if (!count) throw new NotFoundError('"product" not found.');
   },
 
-  async get(id: Product['id']): Promise<Product> {
-    const product = await productModel.findOne({ id }) as Product;
+  async get(_id: Product['id']): Promise<Product> {
+    const product = await productModel.findOne({ _id }) as Product;
     return product;
   },
 

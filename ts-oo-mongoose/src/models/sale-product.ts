@@ -12,11 +12,11 @@ const collectionName = 'sale_product';
 const attributes: SchemaDefinition<SaleProduct> = {
   saleId: {
     required: true,
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
   },
   productId: {
     required: false,
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
   },
   description: {
     required: true,

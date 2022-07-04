@@ -52,7 +52,7 @@ describe('routes/api/sales', () => {
 
     it('should return 404 if not found', async () => {
       const url = `${baseUrl}/1`;
-      sinon.stub(saleModel, 'findByPk').resolves();
+      sinon.stub(saleModel, 'findOne').resolves();
 
       const result = await chai
         .request(app)
@@ -64,12 +64,11 @@ describe('routes/api/sales', () => {
 
     it('should return 200 if success', async () => {
       const url = `${baseUrl}/1`;
-      const mock = { toJSON: () => ({}) } as Model;
-      sinon.stub(saleModel, 'findByPk').resolves(mock);
-      sinon.stub(saleModel, 'update').resolves();
-      sinon.stub(saleProductModel, 'destroy').resolves();
-      sinon.stub(saleProductModel, 'bulkCreate').resolves();
-      sinon.stub(saleProductModel, 'findAll').resolves([]);
+      sinon.stub(saleModel, 'findOne').resolves({});
+      sinon.stub(saleModel, 'updateOne').resolves();
+      sinon.stub(saleProductModel, 'deleteOne').resolves();
+      sinon.stub(saleProductModel, 'insertMany').resolves();
+      sinon.stub(saleProductModel, 'find').resolves([]);
 
       const result = await chai
         .request(app)
@@ -107,7 +106,7 @@ describe('routes/api/sales', () => {
       sinon.stub(productModel, 'findAll').resolves([{ id: 1 } as Model]);
       sinon.stub(saleModel, 'create').resolves({} as Model);
       sinon.stub(saleProductModel, 'bulkCreate').resolves();
-      sinon.stub(saleModel, 'findByPk').resolves(model);
+      sinon.stub(saleModel, 'findOne').resolves(model);
       sinon.stub(saleProductModel, 'findAll').resolves([model]);
       const result = await chai
         .request(app)
@@ -137,7 +136,7 @@ describe('routes/api/sales', () => {
     });
 
     it('should return 404 if sale not found', async () => {
-      sinon.stub(saleModel, 'findByPk').resolves();
+      sinon.stub(saleModel, 'findOne').resolves();
       const url = `${baseUrl}/999`;
 
       const result = await chai
@@ -148,8 +147,8 @@ describe('routes/api/sales', () => {
     });
 
     it('should return 204 if remove', async () => {
-      sinon.stub(saleModel, 'findByPk').resolves({} as Model);
-      sinon.stub(saleModel, 'destroy').resolves();
+      sinon.stub(saleModel, 'findOne').resolves({} as Model);
+      sinon.stub(saleModel, 'deleteOne').resolves();
 
       const url = `${baseUrl}/1`;
 
@@ -178,7 +177,7 @@ describe('routes/api/sales', () => {
 
     it('should return 404 if not found', async () => {
       const url = `${baseUrl}/1`;
-      sinon.stub(saleModel, 'findByPk').resolves();
+      sinon.stub(saleModel, 'findOne').resolves();
 
       const result = await chai
         .request(app)
@@ -190,7 +189,7 @@ describe('routes/api/sales', () => {
     it('should return 200 if success', async () => {
       const url = `${baseUrl}/1`;
       const mock = { toJSON: () => ({}) } as Model;
-      sinon.stub(saleModel, 'findByPk').resolves(mock);
+      sinon.stub(saleModel, 'findOne').resolves(mock);
       sinon.stub(saleProductModel, 'findAll').resolves([mock]);
 
       const result = await chai

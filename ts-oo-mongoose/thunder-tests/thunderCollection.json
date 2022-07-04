@@ -1,7 +1,7 @@
 [
   {
     "_id": "b51d7fa5-80ad-4ecc-a12a-abdd39c4ec00",
-    "colName": "ts-pf-sequelize",
+    "colName": "ts-oo-mongoose",
     "created": "2022-06-13T16:14:04.154Z",
     "sortNum": 10000,
     "folders": [

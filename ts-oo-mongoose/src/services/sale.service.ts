@@ -14,14 +14,14 @@ import { runSchema } from './_services';
 
 export const saleService = {
   validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.number().required().positive().integer(),
+    id: Joi.string().required().length(24),
   }).required()),
 
   validateBodyAdd: runSchema<AddSale>(Joi.object<AddSale>({
     sellerName: Joi.string().required().max(100),
     purchaserName: Joi.string().required().max(100),
     products: Joi.array().required().min(1).items(Joi.object<SaleProducts[0]>({
-      id: Joi.number().required().positive().integer(),
+      id: Joi.string().required().length(24),
       description: Joi.string().required().max(100),
       quantity: Joi.number().required().positive(),
       price: Joi.number().required().min(0),
@@ -33,7 +33,7 @@ export const saleService = {
     sellerName: Joi.string().max(100),
     purchaserName: Joi.string().max(100),
     products: Joi.array().min(1).items(Joi.object<SaleProducts[0]>({
-      id: Joi.number().required().positive().integer(),
+      id: Joi.string().required().length(24),
       description: Joi.string().required().max(100),
       quantity: Joi.number().required().positive(),
       price: Joi.number().required().min(0),
@@ -47,7 +47,7 @@ export const saleService = {
     if (products) {
       await saleProductModel.deleteMany({ saleId });
       const saleProducts = products
-        .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
+        .map(({ id: id, ...p }) => ({ productId: id, saleId, ...p }));
       await saleProductModel.insertMany(saleProducts);
     }
   },
@@ -57,23 +57,23 @@ export const saleService = {
     const { id: saleId } = await saleModel
       .create(saleData) as Sale;
     const saleProducts = products
-      .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
+      .map(({ id: id, ...p }) => ({ productId: id, saleId, ...p }));
     await saleProductModel.insertMany(saleProducts);
     return saleId;
   },
 
   async remove(id: Sale['id']): Promise<void> {
-    await saleModel.deleteOne({ id });
+    await saleModel.deleteOne({ id: id });
   },
 
   async exists(id: Sale['id']): Promise<void> {
-    const count = await saleModel.count({ id });
+    const count = await saleModel.count({ id: id });
     if (!count) throw new NotFoundError('"sale" not found.');
   },
 
   async get(id: Sale['id']): Promise<FullSale> {
     const sale = await saleModel
-      .findOne({ id }) as Sale;
+      .findOne({ id: id }) as Sale;
     const products = await saleProductModel
       .find({ saleId: id }) as SaleProduct[];
     return { ...sale, products } as FullSale;

@@ -19,8 +19,8 @@ export type Sale = Indexable & {
 }
 
 export type SaleProduct = Indexable & {
-  saleId: number
-  productId: number
+  saleId: Indexable['id']
+  productId: Indexable['id']
   description: string
   quantity: number
   price: number
