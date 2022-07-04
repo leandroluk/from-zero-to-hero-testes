@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { NotFoundError } from '../../src/errors';
 import { productModel } from '../../src/models';
 import { productService } from '../../src/services';
-import { Product } from '../../src/types';
+import { AddProduct } from '../../src/types';
 
 use(chaiAsPromised);
 
@@ -32,7 +32,7 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      const mock = [{ id: 1 } as unknown as Model];
+      const mock = [{ id: 1 } as Model];
       sinon.stub(productModel, 'findAll').resolves(mock);
       return expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.undefined;
@@ -75,7 +75,7 @@ describe('services/product.service', () => {
   });
 
   describe('add', () => {
-    const addMock = {} as Product.Add;
+    const addMock = {} as AddProduct;
 
     it('should rejects if productModel.create throws', () => {
       sinon.stub(productModel, 'create').rejects();
@@ -84,9 +84,10 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'create').resolves();
+      const mock = { id: 1 } as Model;
+      sinon.stub(productModel, 'create').resolves(mock);
       return expect(productService.add(addMock))
-        .to.eventually.be.undefined;
+        .to.eventually.equal(1);
     });
   });
 
@@ -112,7 +113,8 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'findByPk').resolves();
+      const mock = {} as Model;
+      sinon.stub(productModel, 'findByPk').resolves(mock);
       return expect(productService.get(1))
         .to.eventually.be.ok;
     });
@@ -126,7 +128,7 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'findAll').resolves();
+      sinon.stub(productModel, 'findAll').resolves([]);
       return expect(productService.list())
         .to.eventually.be.ok;
     });

@@ -3,7 +3,7 @@ import { productService, saleService } from '../services';
 
 export const saleController = {
   async edit(req: Request, res: Response): Promise<void> {
-    const [{ id }, changes] = await Promise.all([
+    const [{ id: id }, changes] = await Promise.all([
       saleService.validateParamsId(req.params),
       saleService.validateBodyEdit(req.body),
     ]);
@@ -23,14 +23,14 @@ export const saleController = {
   },
 
   async remove(req: Request, res: Response): Promise<void> {
-    const { id } = await saleService.validateParamsId(req.params);
+    const { id: id } = await saleService.validateParamsId(req.params);
     await saleService.exists(id);
     await saleService.remove(id);
     res.sendStatus(204);
   },
 
   async get(req: Request, res: Response): Promise<void> {
-    const { id } = await saleService.validateParamsId(req.params);
+    const { id: id } = await saleService.validateParamsId(req.params);
     await saleService.exists(id);
     const result = await saleService.get(id);
     res.json(result);

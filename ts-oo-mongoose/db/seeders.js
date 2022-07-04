@@ -34,21 +34,21 @@ const listOfProduct = [
 const listOfSale = [
   {
     _id: new ObjectId(),
-    seller_name: 'Anonymous',
-    purchaser_name: 'Thanos',
+    sellerName: 'Anonymous',
+    purchaserName: 'Thanos',
   },
   {
     _id: new ObjectId(),
-    seller_name: 'Wakanda',
-    purchaser_name: 'Capitao America',
+    sellerName: 'Wakanda',
+    purchaserName: 'Capitao America',
   },
 ];
 
 const listOfSaleProduct = [
   {
     _id: new ObjectId(),
-    sale_id: listOfSale[0]._id,
-    product_id: listOfProduct[0]._id,
+    saleId: listOfSale[0]._id,
+    productId: listOfProduct[0]._id,
     description: 'Martelo do Thor',
     quantity: 1,
     price: 210.26,
@@ -56,8 +56,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    sale_id: listOfSale[0]._id,
-    product_id: listOfProduct[1]._id,
+    saleId: listOfSale[0]._id,
+    productId: listOfProduct[1]._id,
     description: 'Escudo do Capitao America (V1)',
     quantity: 2,
     price: 98.10,
@@ -65,8 +65,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    sale_id: listOfSale[0]._id,
-    product_id: listOfProduct[2]._id,
+    saleId: listOfSale[0]._id,
+    productId: listOfProduct[2]._id,
     description: 'Manopla do Thanos',
     quantity: 1,
     price: 554.15,
@@ -74,8 +74,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    sale_id: listOfSale[1]._id,
-    product_id: listOfProduct[4]._id,
+    saleId: listOfSale[1]._id,
+    productId: listOfProduct[4]._id,
     description: 'Super Arco do Gaviao Arqueiro',
     quantity: 3,
     price: 57.66,

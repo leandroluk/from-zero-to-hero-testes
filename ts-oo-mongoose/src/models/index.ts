@@ -1,10 +1,24 @@
-import mongoose from 'mongoose';
+import { connect, Document, SchemaOptions } from 'mongoose';
 import vars from '../vars';
+import makeProduct from './product';
+import makeSale from './sale';
+import makeSalePoduct from './sale-product';
 
-export { default as productModel } from './product';
-export { default as saleModel } from './sale';
-export { default as salePoductModel } from './sale-product';
+const defaultOptions: SchemaOptions = {
+  versionKey: false,
+  toJSON: {
+    virtuals: true,
+    transform(_, ret: Document) {
+      const { _id: id, ...rest } = ret;
+      return { id, ...rest };
+    }
+  }
+};
+
+export const productModel = makeProduct(defaultOptions);
+export const saleModel = makeSale(defaultOptions);
+export const saleProductModel = makeSalePoduct(defaultOptions);
 
 export default async () => {
-  await mongoose.connect(vars.mongo.uri);
+  await connect(vars.mongo.uri);
 };

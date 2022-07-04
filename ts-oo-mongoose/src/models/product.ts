@@ -1,44 +1,33 @@
 import {
-  DataTypes,
-  ModelAttributes,
-  ModelOptions,
-  Sequelize
-} from 'sequelize';
-import { SequelizeModel } from '../types';
+  model,
+  Model,
+  Schema,
+  SchemaDefinition,
+  SchemaOptions
+} from 'mongoose';
+import { Product } from '../types';
 
-const tableName = 'product';
+const collectionName = 'product';
 
-const attributes: ModelAttributes = {
-  id: {
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-    type: DataTypes.INTEGER,
-  },
+const attributes: SchemaDefinition<Product> = {
   description: {
-    allowNull: false,
-    type: DataTypes.STRING(100),
+    required: true,
+    type: Schema.Types.String,
   },
   price: {
-    allowNull: false,
-    type: DataTypes.FLOAT,
+    required: true,
+    type: Schema.Types.Number,
   },
   unit: {
-    allowNull: false,
-    type: DataTypes.STRING(20),
-  },
+    required: true,
+    type: Schema.Types.String,
+  }
 };
 
-const options: ModelOptions = {
-  tableName,
-  freezeTableName: true,
-  timestamps: false,
-};
-
-const associate: SequelizeModel['associate'] = (_model, _models) => { };
-
-export default (sequelize: Sequelize): SequelizeModel => {
-  const model = sequelize.define(tableName, attributes, options) as SequelizeModel;
-  model.associate = associate;
-  return model;
-};
+export default (
+  defaultOptions: SchemaOptions
+): Model<Product> => model<Product>(
+  collectionName,
+  new Schema(attributes, defaultOptions),
+  collectionName
+);

@@ -104,7 +104,7 @@ describe('routes/api/sales', () => {
 
     it('should return 201 if success', async () => {
       const model = { toJSON: () => ({}) } as Model;
-      sinon.stub(productModel, 'findAll').resolves([{ id: 1 } as unknown as Model]);
+      sinon.stub(productModel, 'findAll').resolves([{ id: 1 } as Model]);
       sinon.stub(saleModel, 'create').resolves({} as Model);
       sinon.stub(saleProductModel, 'bulkCreate').resolves();
       sinon.stub(saleModel, 'findByPk').resolves(model);

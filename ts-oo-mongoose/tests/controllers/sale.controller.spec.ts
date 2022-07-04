@@ -4,7 +4,7 @@ import { Request } from 'express';
 import sinon from 'sinon';
 import { saleController } from '../../src/controllers';
 import { productService, saleService } from '../../src/services';
-import { Sale } from '../../src/types';
+import { AddSale } from '../../src/types';
 import { makeRes } from './_controllers';
 
 use(chaiAsPromised);
@@ -74,7 +74,7 @@ describe('controllers/sale.controller', () => {
   });
 
   describe('add', () => {
-    const mock = { products: [] } as unknown as Sale.Add;
+    const mock = { products: [] } as AddSale;
 
     it('should rejects if saleService.validateBodyAdd throws', () => {
       sinon.stub(saleService, 'validateBodyAdd').rejects();

@@ -18,13 +18,13 @@ describe('services/_services', () => {
   describe('runSchema', () => {
     it('should rejects if schema returns error', () => {
       const schema = { validate: () => ({ error: makeJoiError('error') }) };
-      const validator = runSchema(schema as unknown as Schema);
+      const validator = runSchema(schema as Schema);
       expect(validator('')).to.eventually.be.rejected;
     });
 
     it('should resolve parsed value when no error', () => {
       const schema = { validate: (value: any) => ({ value }) };
-      const validator = runSchema(schema as unknown as Schema);
+      const validator = runSchema(schema as Schema);
       expect(validator(1)).to.eventually.be.equal(1);
     });
   });

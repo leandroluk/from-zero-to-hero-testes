@@ -1,7 +1,15 @@
 import Joi from 'joi';
 import { NotFoundError } from '../errors';
 import { saleModel, saleProductModel } from '../models';
-import { Indexable, Sale, SaleProduct } from '../types';
+import {
+  AddSale,
+  EditSale,
+  FullSale,
+  Indexable,
+  Sale,
+  SaleProduct,
+  SaleProducts
+} from '../types';
 import { runSchema } from './_services';
 
 export const saleService = {
@@ -9,10 +17,10 @@ export const saleService = {
     id: Joi.number().required().positive().integer(),
   }).required()),
 
-  validateBodyAdd: runSchema<Sale.Add>(Joi.object<Sale.Add>({
+  validateBodyAdd: runSchema<AddSale>(Joi.object<AddSale>({
     sellerName: Joi.string().required().max(100),
     purchaserName: Joi.string().required().max(100),
-    products: Joi.array().required().min(1).items(Joi.object<Sale.Products[0]>({
+    products: Joi.array().required().min(1).items(Joi.object<SaleProducts[0]>({
       id: Joi.number().required().positive().integer(),
       description: Joi.string().required().max(100),
       quantity: Joi.number().required().positive(),
@@ -21,10 +29,10 @@ export const saleService = {
     })),
   }).required()),
 
-  validateBodyEdit: runSchema<Sale.Edit>(Joi.object<Sale.Edit>({
+  validateBodyEdit: runSchema<EditSale>(Joi.object<EditSale>({
     sellerName: Joi.string().max(100),
     purchaserName: Joi.string().max(100),
-    products: Joi.array().min(1).items(Joi.object<Sale.Products[0]>({
+    products: Joi.array().min(1).items(Joi.object<SaleProducts[0]>({
       id: Joi.number().required().positive().integer(),
       description: Joi.string().required().max(100),
       quantity: Joi.number().required().positive(),
@@ -33,48 +41,47 @@ export const saleService = {
     })),
   }).required()),
 
-  async edit(saleId: Sale['id'], changes: Sale.Edit): Promise<void> {
+  async edit(saleId: Sale['id'], changes: EditSale): Promise<void> {
     const { products, ...saleChanges } = changes;
-    await saleModel.update(saleChanges, { where: { id: saleId } });
+    await saleModel.updateOne({ id: saleId }, saleChanges);
     if (products) {
-      await saleProductModel.destroy({ where: { saleId } });
+      await saleProductModel.deleteMany({ saleId });
       const saleProducts = products
         .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
-      await saleProductModel.bulkCreate(saleProducts);
+      await saleProductModel.insertMany(saleProducts);
     }
   },
 
-  async add(data: Sale.Add) {
+  async add(data: AddSale) {
     const { products, ...saleData } = data;
     const { id: saleId } = await saleModel
-      .create(saleData, { raw: true }) as unknown as Sale;
+      .create(saleData) as Sale;
     const saleProducts = products
       .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
-    await saleProductModel.bulkCreate(saleProducts);
+    await saleProductModel.insertMany(saleProducts);
     return saleId;
   },
 
   async remove(id: Sale['id']): Promise<void> {
-    await saleModel.destroy({ where: { id } });
+    await saleModel.deleteOne({ id });
   },
 
   async exists(id: Sale['id']): Promise<void> {
-    const item = await saleModel.findByPk(id);
-    if (!item) throw new NotFoundError('"sale" not found.');
+    const count = await saleModel.count({ id });
+    if (!count) throw new NotFoundError('"sale" not found.');
   },
 
-  async get(id: Sale['id']): Promise<Sale.Full | void> {
+  async get(id: Sale['id']): Promise<FullSale> {
     const sale = await saleModel
-      .findByPk(id, { raw: true }) as unknown as Sale;
-    const products = await saleProductModel.findAll({
-      where: { saleId: id }, raw: true
-    }) as unknown as SaleProduct[];
-    return { ...sale, products } as Sale.Full;
+      .findOne({ id }) as Sale;
+    const products = await saleProductModel
+      .find({ saleId: id }) as SaleProduct[];
+    return { ...sale, products } as FullSale;
   },
 
   async list(): Promise<Sale[]> {
     const sales = await saleModel
-      .findAll({ raw: true }) as unknown as Sale[];
+      .find() as Sale[];
     return sales;
   },
 };

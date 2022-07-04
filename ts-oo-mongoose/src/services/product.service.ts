@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { NotFoundError } from '../errors';
 import { productModel } from '../models';
-import { Indexable, Product } from '../types';
+import { AddProduct, EditProduct, Indexable, Product } from '../types';
 import { runSchema } from './_services';
 
 export const productService = {
@@ -9,13 +9,13 @@ export const productService = {
     id: Joi.number().required().positive().integer(),
   }).required()),
 
-  validateBodyAdd: runSchema<Product.Add>(Joi.object<Product.Add>({
+  validateBodyAdd: runSchema<AddProduct>(Joi.object<AddProduct>({
     description: Joi.string().required().max(100),
     price: Joi.number().required().positive(),
     unit: Joi.string().required().max(20),
   }).required()),
 
-  validateBodyEdit: runSchema<Product.Edit>(Joi.object<Product.Edit>({
+  validateBodyEdit: runSchema<EditProduct>(Joi.object<EditProduct>({
     description: Joi.string().max(100),
     price: Joi.number().positive(),
     unit: Joi.string().max(20),
@@ -23,7 +23,7 @@ export const productService = {
 
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
     const items = await productModel
-      .findAll({ where: { id: arrayOfId } }) as unknown as Product[];
+      .find({ id: arrayOfId }) as Product[];
     arrayOfId.forEach((id, index) => {
       if (!items.some((item) => item.id === id)) {
         throw new NotFoundError(`"product[${index}]" not found.`);
@@ -31,32 +31,31 @@ export const productService = {
     });
   },
 
-  async edit(id: Product['id'], changes: Product.Edit): Promise<void> {
-    await productModel.update(changes, { where: { id } });
+  async edit(id: Product['id'], changes: EditProduct): Promise<void> {
+    await productModel.updateOne({ id }, changes);
   },
 
-  async add(data: Product.Add): Promise<Product['id']> {
-    const { id } = await productModel.create(data) as unknown as Product;
+  async add(data: AddProduct): Promise<Product['id']> {
+    const { id } = await productModel.create(data) as Product;
     return id;
   },
 
   async remove(id: Product['id']): Promise<void> {
-    await productModel.destroy({ where: { id } });
+    await productModel.deleteOne({ where: { id } });
   },
 
   async exists(id: Product['id']): Promise<void> {
-    const item = await productModel.findByPk(id);
-    if (!item) throw new NotFoundError('"product" not found.');
+    const count = await productModel.count({ id });
+    if (!count) throw new NotFoundError('"product" not found.');
   },
 
   async get(id: Product['id']): Promise<Product> {
-    const product = await productModel
-      .findByPk(id, { raw: true }) as unknown as Product;
+    const product = await productModel.findOne({ id }) as Product;
     return product;
   },
+
   async list(): Promise<Product[]> {
-    const products = await productModel
-      .findAll({ raw: true }) as unknown as Product[];
+    const products = await productModel.find() as Product[];
     return products;
   },
 };
