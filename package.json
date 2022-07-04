@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/leandroluk/from-zero-to-hero-testes#readme",
   "devDependencies": {
+    "@types/sequelize": "^4.28.13",
     "eslint": "^8.16.0",
     "nodemon": "^2.0.16"
   }

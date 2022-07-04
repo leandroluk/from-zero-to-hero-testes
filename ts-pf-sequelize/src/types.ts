@@ -1,4 +1,4 @@
-import { Model, ModelStatic } from 'sequelize'
+import { Model, ModelStatic } from 'sequelize';
 
 export type Indexable = {
   id: number

@@ -22,7 +22,7 @@ describe('services/sale.service', () => {
   // validateBodyEdit
 
   describe('add', () => {
-    const addMock = {} as Sale.Add;
+    const addMock = { products: [] } as unknown as Sale.Add;
 
     it('should rejects if saleModel.create throws', () => {
       sinon.stub(saleModel, 'create').rejects();
@@ -38,7 +38,8 @@ describe('services/sale.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(saleModel, 'create').resolves({} as Model);
+      const mock = { id: 1 } as unknown as Model;
+      sinon.stub(saleModel, 'create').resolves(mock);
       sinon.stub(saleProductModel, 'bulkCreate').resolves();
       return expect(saleService.add(addMock))
         .to.eventually.be.equal(1);
@@ -46,16 +47,18 @@ describe('services/sale.service', () => {
   });
 
   describe('edit', () => {
+    const editSale = { products: [] } as unknown as Sale.Edit;
+
     it('should rejects if saleModel.update throws', () => {
       sinon.stub(saleModel, 'update').rejects();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, editSale))
         .to.eventually.be.rejected;
     });
 
     it('should rejects if saleProductModel.destroy throws', () => {
       sinon.stub(saleModel, 'update').resolves();
       sinon.stub(saleProductModel, 'destroy').rejects();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, editSale))
         .to.eventually.be.rejected;
     });
 
@@ -63,7 +66,7 @@ describe('services/sale.service', () => {
       sinon.stub(saleModel, 'update').resolves();
       sinon.stub(saleProductModel, 'destroy').resolves();
       sinon.stub(saleProductModel, 'bulkCreate').rejects();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, editSale))
         .to.eventually.be.rejected;
     });
 
@@ -71,7 +74,7 @@ describe('services/sale.service', () => {
       sinon.stub(saleModel, 'update').resolves();
       sinon.stub(saleProductModel, 'destroy').resolves();
       sinon.stub(saleProductModel, 'bulkCreate').resolves();
-      return expect(saleService.edit(1, {}))
+      return expect(saleService.edit(1, editSale))
         .to.eventually.be.undefined;
     });
   });
@@ -111,7 +114,7 @@ describe('services/sale.service', () => {
   });
 
   describe('get', () => {
-    const mock = { toJSON: () => ({}) } as unknown as Model;
+    const mock = {} as Model;
 
     it('should rejects if saleModel.findByPk throws', () => {
       sinon.stub(saleModel, 'findByPk').rejects();

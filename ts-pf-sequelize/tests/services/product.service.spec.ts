@@ -84,9 +84,10 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'create').resolves();
+      const mock = { id: 1 } as unknown as Model;
+      sinon.stub(productModel, 'create').resolves(mock);
       return expect(productService.add(addMock))
-        .to.eventually.be.undefined;
+        .to.eventually.equal(1);
     });
   });
 
@@ -112,7 +113,8 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'findByPk').resolves();
+      const mock = {} as Model;
+      sinon.stub(productModel, 'findByPk').resolves(mock);
       return expect(productService.get(1))
         .to.eventually.be.ok;
     });
@@ -126,7 +128,7 @@ describe('services/product.service', () => {
     });
 
     it('should resolves if success', () => {
-      sinon.stub(productModel, 'findAll').resolves();
+      sinon.stub(productModel, 'findAll').resolves([]);
       return expect(productService.list())
         .to.eventually.be.ok;
     });

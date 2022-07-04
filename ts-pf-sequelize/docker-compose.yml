@@ -2,10 +2,10 @@ version: '3'
 
 services:
   mysql:
-    container_name: ts-pf-mysql_mysql
+    container_name: ts-pf-sequelize_mysql
     image: mysql:5
     environment: 
-      MYSQL_ROOT_PASSWORD: "root"
+      - "MYSQL_ROOT_PASSWORD=root"
     ports: 
       - "3306:3306"
     healthcheck:
@@ -13,19 +13,19 @@ services:
       timeout: 10s
       retries: 10
       start_period: 10s
-    networks:
-      - ts-pf-mysql
-  
+    networks: 
+      - "ts-pf-sequelize"
+
   sequelize:
-    container_name: ts-pf-mysql_sequelize
+    container_name: ts-pf-sequelize_sequelize
     build: .
     environment:
-      NODE_ENV: "development"
-      MYSQL_URI: "mysql://root:root@mysql:3306/db"
+      - "NODE_ENV=development"
+      - "MYSQL_URI=mysql://root:root@mysql:3306/db"
     depends_on:
       mysql:
         condition: service_healthy
-    command: > 
+    command: >
       bash -c "
         npm add sequelize-cli &&
         npx sequelize-cli db:drop && 
@@ -33,9 +33,9 @@ services:
         npx sequelize-cli db:migrate && 
         npx sequelize-cli db:seed:all
       "
-    networks:
-      - ts-pf-mysql
+    networks: 
+      - "ts-pf-sequelize"
 
 networks:
-  ts-pf-mysql:
-    name: ts-pf-mysql
+  ts-pf-sequelize:
+    name: ts-pf-sequelize

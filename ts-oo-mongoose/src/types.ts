@@ -1,5 +1,3 @@
-import { Model, ModelStatic } from 'sequelize'
-
 export type Indexable = {
   id: number
 }
@@ -36,11 +34,4 @@ export type SaleProduct = Indexable & {
   quantity: number
   price: number
   unit: string
-}
-
-export type SequelizeModel<A = any, C = any> = ModelStatic<Model<A, C>> & {
-  associate?: (
-    model: SequelizeModel<A, C>,
-    models: Record<string, SequelizeModel>
-  ) => void
 }

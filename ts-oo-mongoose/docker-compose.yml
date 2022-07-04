@@ -1,41 +1,24 @@
 version: '3'
 
 services:
-  mysql:
-    container_name: ts-pf-mysql_mysql
-    image: mysql:5
+  mongo:
+    container_name: ts-oo-mongoose_mongo
+    image: mongo
     environment: 
-      MYSQL_ROOT_PASSWORD: "root"
+      - "MONGO_INITDB_DATABASE=db"
+    volumes:
+      - "./db:/docker-entrypoint-initdb.d"
     ports: 
-      - "3306:3306"
+      - "27017:27017"
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-proot" ]
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
       timeout: 10s
-      retries: 10
-      start_period: 10s
+      retries: 5
+      start_period: 40s
     networks:
-      - ts-pf-mysql
-  
-  sequelize:
-    container_name: ts-pf-mysql_sequelize
-    build: .
-    environment:
-      NODE_ENV: "development"
-      MYSQL_URI: "mysql://root:root@mysql:3306/db"
-    depends_on:
-      mysql:
-        condition: service_healthy
-    command: > 
-      bash -c "
-        npm add sequelize-cli &&
-        npx sequelize-cli db:drop && 
-        npx sequelize-cli db:create && 
-        npx sequelize-cli db:migrate && 
-        npx sequelize-cli db:seed:all
-      "
-    networks:
-      - ts-pf-mysql
+      - ts-oo-mongoose
 
 networks:
-  ts-pf-mysql:
-    name: ts-pf-mysql
+  ts-oo-mongoose:
+    name: ts-oo-mongoose

@@ -75,7 +75,7 @@ describe('products', () => {
       .send(addProduct)
 
     expect(res.status).to.equal(201)
-    expect(res.body.id).to.equal(nextId);
+    expect(res.body.id).to.equal(nextId)
     expect(res.body.description).to.equal(addProduct.description)
     expect(res.body.price).to.equal(addProduct.price)
     expect(res.body.unit).to.equal(addProduct.unit)
@@ -94,7 +94,7 @@ describe('products', () => {
       addProduct.unit
     ])
 
-    expect(insertedProduct).to.ok;
+    expect(insertedProduct).to.ok
   })
 
   it('should edit product with id = 1 and return with status 200', async () => {

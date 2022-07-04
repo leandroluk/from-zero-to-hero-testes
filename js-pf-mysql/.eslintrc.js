@@ -1,9 +1,9 @@
 module.exports = {
-  'extends': 'trybe-backend',
-  'overrides': [
+  extends: 'trybe-backend',
+  overrides: [
     {
-      'files': ['./tests/**/*.js'],
-      'rules': {
+      files: ['./tests/**/*.js'],
+      rules: {
         'no-unused-expressions': 'off',
         'newline-per-chained-call': 'off',
         'mocha/no-mocha-arrows': 'off',
@@ -11,8 +11,8 @@ module.exports = {
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/prefer-object-literal': 'off',
         'max-lines-per-function': 'off',
-        'max-lines': 'off'
-      }
-    }
-  ]
-}
+        'max-lines': 'off',
+      },
+    },
+  ],
+};
