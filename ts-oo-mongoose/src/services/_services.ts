@@ -1,4 +1,7 @@
 import { Schema } from 'joi';
+import { Types } from 'mongoose';
+
+export const toObjectId = (value: unknown) => new Types.ObjectId(value as string);
 
 export const runSchema = <T>(schema: Schema<T>) => (
   async (unknown: unknown): Promise<T> => {

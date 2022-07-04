@@ -6,15 +6,13 @@ import {
   EditSale,
   FullSale,
   Indexable,
-  Sale,
-  SaleProduct,
-  SaleProducts
+  Sale, SaleProducts
 } from '../types';
-import { runSchema } from './_services';
+import { runSchema, toObjectId } from './_services';
 
 export const saleService = {
   validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.string().required().length(24),
+    id: Joi.string().required().length(24).custom(toObjectId),
   }).required()),
 
   validateBodyAdd: runSchema<AddSale>(Joi.object<AddSale>({
@@ -43,11 +41,11 @@ export const saleService = {
 
   async edit(saleId: Sale['id'], changes: EditSale): Promise<void> {
     const { products, ...saleChanges } = changes;
-    await saleModel.updateOne({ id: saleId }, saleChanges);
+    await saleModel.updateOne({ _id: saleId }, saleChanges);
     if (products) {
       await saleProductModel.deleteMany({ saleId });
       const saleProducts = products
-        .map(({ id: id, ...p }) => ({ productId: id, saleId, ...p }));
+        .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
       await saleProductModel.insertMany(saleProducts);
     }
   },
@@ -57,25 +55,25 @@ export const saleService = {
     const { id: saleId } = await saleModel
       .create(saleData) as Sale;
     const saleProducts = products
-      .map(({ id: id, ...p }) => ({ productId: id, saleId, ...p }));
+      .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
     await saleProductModel.insertMany(saleProducts);
     return saleId;
   },
 
-  async remove(id: Sale['id']): Promise<void> {
-    await saleModel.deleteOne({ id: id });
+  async remove(_id: Sale['id']): Promise<void> {
+    await saleModel.deleteOne({ _id });
   },
 
-  async exists(id: Sale['id']): Promise<void> {
-    const count = await saleModel.count({ id: id });
+  async exists(_id: Sale['id']): Promise<void> {
+    const count = await saleModel.count({ _id });
     if (!count) throw new NotFoundError('"sale" not found.');
   },
 
-  async get(id: Sale['id']): Promise<FullSale> {
-    const sale = await saleModel
-      .findOne({ id: id }) as Sale;
-    const products = await saleProductModel
-      .find({ saleId: id }) as SaleProduct[];
+  async get(_id: Sale['id']): Promise<FullSale> {
+    const modelSale = await saleModel.findOne({ _id });
+    const sale = modelSale!.toJSON();
+    const modelsSaleProduct = await saleProductModel.find({ saleId: _id });
+    const products = modelsSaleProduct.map((item) => item.toJSON());
     return { ...sale, products } as FullSale;
   },
 

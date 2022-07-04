@@ -2,11 +2,11 @@ import Joi from 'joi';
 import { NotFoundError } from '../errors';
 import { productModel } from '../models';
 import { AddProduct, EditProduct, Indexable, Product } from '../types';
-import { runSchema } from './_services';
+import { runSchema, toObjectId } from './_services';
 
 export const productService = {
   validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.string().required().length(24),
+    id: Joi.string().required().length(24).custom(toObjectId),
   }).required()),
 
   validateBodyAdd: runSchema<AddProduct>(Joi.object<AddProduct>({
@@ -22,8 +22,7 @@ export const productService = {
   }).required()),
 
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
-    const items = await productModel
-      .find({ _id: arrayOfId }) as Product[];
+    const items = await productModel.find({ _id: arrayOfId }) as Product[];
     arrayOfId.forEach((id, index) => {
       if (!items.some((item) => item.id === id)) {
         throw new NotFoundError(`"product[${index}]" not found.`);
@@ -50,12 +49,14 @@ export const productService = {
   },
 
   async get(_id: Product['id']): Promise<Product> {
-    const product = await productModel.findOne({ _id }) as Product;
+    const model = await productModel.findOne({ _id });
+    const product = model!.toJSON();
     return product;
   },
 
   async list(): Promise<Product[]> {
-    const products = await productModel.find() as Product[];
+    const models = await productModel.find();
+    const products = models.map((model) => model.toJSON());
     return products;
   },
 };

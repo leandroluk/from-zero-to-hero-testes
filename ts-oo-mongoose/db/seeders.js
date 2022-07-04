@@ -47,8 +47,8 @@ const listOfSale = [
 const listOfSaleProduct = [
   {
     _id: new ObjectId(),
-    saleId: listOfSale[0]._id,
-    productId: listOfProduct[0]._id,
+    saleId: listOfSale[0]._id + '',
+    productId: listOfProduct[0]._id + '',
     description: 'Martelo do Thor',
     quantity: 1,
     price: 210.26,
@@ -56,8 +56,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    saleId: listOfSale[0]._id,
-    productId: listOfProduct[1]._id,
+    saleId: listOfSale[0]._id + '',
+    productId: listOfProduct[1]._id + '',
     description: 'Escudo do Capitao America (V1)',
     quantity: 2,
     price: 98.10,
@@ -65,8 +65,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    saleId: listOfSale[0]._id,
-    productId: listOfProduct[2]._id,
+    saleId: listOfSale[0]._id + '',
+    productId: listOfProduct[2]._id + '',
     description: 'Manopla do Thanos',
     quantity: 1,
     price: 554.15,
@@ -74,8 +74,8 @@ const listOfSaleProduct = [
   },
   {
     _id: new ObjectId(),
-    saleId: listOfSale[1]._id,
-    productId: listOfProduct[4]._id,
+    saleId: listOfSale[1]._id + '',
+    productId: listOfProduct[4]._id + '',
     description: 'Super Arco do Gaviao Arqueiro',
     quantity: 3,
     price: 57.66,
