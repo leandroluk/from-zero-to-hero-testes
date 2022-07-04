@@ -10,23 +10,12 @@ export type Product = Indexable & {
   unit: string
 }
 
-export namespace Product {
-  export type Add = Omit<Product, keyof Indexable>
-  export type Edit = Partial<Omit<Product, keyof Indexable>>
-}
+export type AddProduct = Omit<Product, keyof Indexable>
+export type EditProduct = Partial<Omit<Product, keyof Indexable>>
 
 export type Sale = Indexable & {
   sellerName: string
   purchaserName: string
-}
-
-export namespace Sale {
-  export type Full = Sale & {
-    products: SaleProduct[]
-  }
-  export type Products = Omit<SaleProduct, 'productId' | 'saleId'>[]
-  export type Add = Omit<Sale, keyof Indexable> & { products: Products }
-  export type Edit = Partial<Omit<Sale, keyof Indexable>> & { products?: Products }
 }
 
 export type SaleProduct = Indexable & {
@@ -37,6 +26,13 @@ export type SaleProduct = Indexable & {
   price: number
   unit: string
 }
+
+export type FullSale = Sale & {
+  products: SaleProduct[]
+}
+export type Products = Omit<SaleProduct, 'productId' | 'saleId'>[]
+export type Add = Omit<Sale, keyof Indexable> & { products: Products }
+export type Edit = Partial<Omit<Sale, keyof Indexable>> & { products?: Products }
 
 export type SequelizeModel<A = any, C = any> = ModelStatic<Model<A, C>> & {
   associate?: (

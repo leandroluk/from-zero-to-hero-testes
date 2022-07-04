@@ -1,12 +1,15 @@
 module.exports = {
   extends: 'trybe-backend-typescript',
   parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
   },
   rules: {
     'comma-dangle': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error']
   },
   overrides: [
     {
