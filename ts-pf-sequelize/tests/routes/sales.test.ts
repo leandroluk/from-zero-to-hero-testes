@@ -2,17 +2,17 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { Model } from 'sequelize';
 import sinon from 'sinon';
-import app from '../../../src/app';
+import app from '../../src/app';
 import {
   productModel,
   saleModel,
   saleProductModel
-} from '../../../src/models';
+} from '../../src/models';
 import {
   invalidAddSaleList,
   invalidEditSaleList,
   invaliParamIdList
-} from '../../_mocks/sale.mock';
+} from '../_mocks/sale.mock';
 
 const { expect } = chai;
 

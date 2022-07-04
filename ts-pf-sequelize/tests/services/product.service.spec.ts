@@ -21,20 +21,20 @@ describe('services/product.service', () => {
   describe('existsByArrayOfId', () => {
     it('should rejects if productModel.findAll throws', () => {
       sinon.stub(productModel, 'findAll').rejects();
-      expect(productService.existsByArrayOfId([1]))
+      return expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.rejected;
     });
 
     it('should rejects if productModel.findAll return missing item', () => {
       sinon.stub(productModel, 'findAll').resolves([]);
-      expect(productService.existsByArrayOfId([1]))
+      return expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.rejectedWith(NotFoundError, '"product[0]" not found.');
     });
 
     it('should resolves if success', () => {
       const mock = [{ id: 1 } as unknown as Model];
       sinon.stub(productModel, 'findAll').resolves(mock);
-      expect(productService.existsByArrayOfId([1]))
+      return expect(productService.existsByArrayOfId([1]))
         .to.eventually.be.undefined;
     });
   });
@@ -42,20 +42,20 @@ describe('services/product.service', () => {
   describe('exists', () => {
     it('should rejects if productModel.findByPk throws', () => {
       sinon.stub(productModel, 'findByPk').rejects();
-      expect(productService.exists(1))
+      return expect(productService.exists(1))
         .to.eventually.be.rejected;
     });
 
     it('should rejects if productModel.findByPk return empty', () => {
       sinon.stub(productModel, 'findByPk').resolves();
-      expect(productService.exists(1))
+      return expect(productService.exists(1))
         .to.eventually.be.rejectedWith(NotFoundError, '"product" not found.');
     });
 
     it('should resolves if success', () => {
       const mock = {} as Model;
       sinon.stub(productModel, 'findByPk').resolves(mock);
-      expect(productService.exists(1))
+      return expect(productService.exists(1))
         .to.eventually.be.undefined;
     });
   });
@@ -63,13 +63,13 @@ describe('services/product.service', () => {
   describe('edit', () => {
     it('should rejects if productModel.update', () => {
       sinon.stub(productModel, 'update').rejects();
-      expect(productService.edit(1, {}))
+      return expect(productService.edit(1, {}))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'update').resolves();
-      expect(productService.edit(1, {}))
+      return expect(productService.edit(1, {}))
         .to.eventually.be.undefined;
     });
   });
@@ -79,13 +79,13 @@ describe('services/product.service', () => {
 
     it('should rejects if productModel.create throws', () => {
       sinon.stub(productModel, 'create').rejects();
-      expect(productService.add(addMock))
+      return expect(productService.add(addMock))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'create').resolves();
-      expect(productService.add(addMock))
+      return expect(productService.add(addMock))
         .to.eventually.be.undefined;
     });
   });
@@ -93,13 +93,13 @@ describe('services/product.service', () => {
   describe('remove', () => {
     it('should rejects if productModel.destroy', () => {
       sinon.stub(productModel, 'destroy').rejects();
-      expect(productService.remove(1))
+      return expect(productService.remove(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'destroy').resolves();
-      expect(productService.remove(1))
+      return expect(productService.remove(1))
         .to.eventually.be.undefined;
     });
   });
@@ -107,13 +107,13 @@ describe('services/product.service', () => {
   describe('get', () => {
     it('should rejects if productModel.findByPk', () => {
       sinon.stub(productModel, 'findByPk').rejects();
-      expect(productService.get(1))
+      return expect(productService.get(1))
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'findByPk').resolves();
-      expect(productService.get(1))
+      return expect(productService.get(1))
         .to.eventually.be.ok;
     });
   });
@@ -121,13 +121,13 @@ describe('services/product.service', () => {
   describe('list', () => {
     it('should rejects if productModel.findAll', () => {
       sinon.stub(productModel, 'findAll').rejects();
-      expect(productService.list())
+      return expect(productService.list())
         .to.eventually.be.rejected;
     });
 
     it('should resolves if success', () => {
       sinon.stub(productModel, 'findAll').resolves();
-      expect(productService.list())
+      return expect(productService.list())
         .to.eventually.be.ok;
     });
   });
