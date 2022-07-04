@@ -30,9 +30,13 @@ export type SaleProduct = Indexable & {
 export type FullSale = Sale & {
   products: SaleProduct[]
 }
-export type Products = Omit<SaleProduct, 'productId' | 'saleId'>[]
-export type Add = Omit<Sale, keyof Indexable> & { products: Products }
-export type Edit = Partial<Omit<Sale, keyof Indexable>> & { products?: Products }
+export type SaleProducts = Omit<SaleProduct, 'productId' | 'saleId'>[]
+export type AddSale = Omit<Sale, keyof Indexable> & {
+  products: SaleProducts
+}
+export type EditSale = Partial<Omit<Sale, keyof Indexable>> & {
+  products?: SaleProducts
+}
 
 export type SequelizeModel<A = any, C = any> = ModelStatic<Model<A, C>> & {
   associate?: (

@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { NotFoundError } from '../../src/errors';
 import { productModel } from '../../src/models';
 import { productService } from '../../src/services';
-import { Product } from '../../src/types';
+import { AddProduct } from '../../src/types';
 
 use(chaiAsPromised);
 
@@ -75,7 +75,7 @@ describe('services/product.service', () => {
   });
 
   describe('add', () => {
-    const addMock = {} as Product.Add;
+    const addMock = {} as AddProduct;
 
     it('should rejects if productModel.create throws', () => {
       sinon.stub(productModel, 'create').rejects();

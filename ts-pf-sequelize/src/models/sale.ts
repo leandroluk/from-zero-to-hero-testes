@@ -4,7 +4,7 @@ import {
   ModelOptions,
   Sequelize
 } from 'sequelize';
-import { Sale, SequelizeModel } from '../types';
+import { AddSale, Sale, SequelizeModel } from '../types';
 
 const tableName = 'sale';
 
@@ -35,7 +35,7 @@ const options: ModelOptions = {
 
 const associate: SequelizeModel['associate'] = (_model, _models) => { };
 
-type Add = Omit<Sale.Add, 'products'>
+type Add = Omit<AddSale, 'products'>
 
 export default (sequelize: Sequelize): SequelizeModel<Sale, Add> => {
   const model = sequelize.define(tableName, attributes, options) as SequelizeModel<Sale, Add>;

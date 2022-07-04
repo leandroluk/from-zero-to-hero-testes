@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { NotFoundError } from '../errors';
 import { productModel } from '../models';
-import { Indexable, Product } from '../types';
+import { AddProduct, EditProduct, Indexable, Product } from '../types';
 import { runSchema } from './_services';
 
 export const productService = {
@@ -9,13 +9,13 @@ export const productService = {
     id: Joi.number().required().positive().integer(),
   }).required()),
 
-  validateBodyAdd: runSchema<Product.Add>(Joi.object<Product.Add>({
+  validateBodyAdd: runSchema<AddProduct>(Joi.object<AddProduct>({
     description: Joi.string().required().max(100),
     price: Joi.number().required().positive(),
     unit: Joi.string().required().max(20),
   }).required()),
 
-  validateBodyEdit: runSchema<Product.Edit>(Joi.object<Product.Edit>({
+  validateBodyEdit: runSchema<EditProduct>(Joi.object<EditProduct>({
     description: Joi.string().max(100),
     price: Joi.number().positive(),
     unit: Joi.string().max(20),
@@ -31,11 +31,11 @@ export const productService = {
     });
   },
 
-  async edit(id: Product['id'], changes: Product.Edit): Promise<void> {
+  async edit(id: Product['id'], changes: EditProduct): Promise<void> {
     await productModel.update(changes, { where: { id } });
   },
 
-  async add(data: Product.Add): Promise<Product['id']> {
+  async add(data: AddProduct): Promise<Product['id']> {
     const { id } = await productModel.create(data) as unknown as Product;
     return id;
   },

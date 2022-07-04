@@ -8,7 +8,7 @@ import {
   saleProductModel
 } from '../../src/models';
 import { saleService } from '../../src/services';
-import { Sale } from '../../src/types';
+import { AddSale, EditSale } from '../../src/types';
 
 use(chaiAsPromised);
 
@@ -22,7 +22,7 @@ describe('services/sale.service', () => {
   // validateBodyEdit
 
   describe('add', () => {
-    const addMock = { products: [] } as unknown as Sale.Add;
+    const addMock = { products: [] } as unknown as AddSale;
 
     it('should rejects if saleModel.create throws', () => {
       sinon.stub(saleModel, 'create').rejects();
@@ -47,7 +47,7 @@ describe('services/sale.service', () => {
   });
 
   describe('edit', () => {
-    const editSale = { products: [] } as unknown as Sale.Edit;
+    const editSale = { products: [] } as unknown as EditSale;
 
     it('should rejects if saleModel.update throws', () => {
       sinon.stub(saleModel, 'update').rejects();
