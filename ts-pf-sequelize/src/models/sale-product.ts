@@ -1,14 +1,15 @@
 import {
   DataTypes,
+  Model,
   ModelAttributes,
   ModelOptions,
   Sequelize
 } from 'sequelize';
-import { SequelizeModel } from '../types';
+import { SaleProduct, SequelizeModel } from '../types';
 
 const tableName = 'sale_product';
 
-const attributes: ModelAttributes = {
+const attributes: ModelAttributes<Model<SaleProduct>> = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -59,8 +60,8 @@ const associate: SequelizeModel['associate'] = (through, models) => {
   models.productModel.belongsToMany(models.saleModel, { ...opts, otherKey: 'productId' });
 };
 
-export default (sequelize: Sequelize): SequelizeModel => {
-  const model = sequelize.define(tableName, attributes, options) as SequelizeModel;
+export default (sequelize: Sequelize): SequelizeModel<SaleProduct> => {
+  const model = sequelize.define(tableName, attributes, options) as SequelizeModel<SaleProduct>;
   model.associate = associate;
   return model;
 };

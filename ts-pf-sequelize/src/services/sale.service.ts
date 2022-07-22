@@ -13,21 +13,25 @@ import {
 import { runSchema } from './_services';
 
 export const saleService = {
-  validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.number().required().positive().integer(),
-  }).required()),
-
-  validateBodyAdd: runSchema<AddSale>(Joi.object<AddSale>({
-    sellerName: Joi.string().required().max(100),
-    purchaserName: Joi.string().required().max(100),
-    products: Joi.array().required().min(1).items(Joi.object<SaleProducts[0]>({
+  validateParamsId: runSchema<Indexable>(
+    Joi.object<Indexable>({
       id: Joi.number().required().positive().integer(),
-      description: Joi.string().required().max(100),
-      quantity: Joi.number().required().positive(),
-      price: Joi.number().required().min(0),
-      unit: Joi.string().required().max(20),
-    })),
-  }).required()),
+    }).required()
+  ),
+
+  validateBodyAdd: runSchema<AddSale>(
+    Joi.object<AddSale>({
+      sellerName: Joi.string().required().max(100),
+      purchaserName: Joi.string().required().max(100),
+      products: Joi.array().required().min(1).items(Joi.object<SaleProducts[0]>({
+        id: Joi.number().required().positive().integer(),
+        description: Joi.string().required().max(100),
+        quantity: Joi.number().required().positive(),
+        price: Joi.number().required().min(0),
+        unit: Joi.string().required().max(20),
+      })),
+    }).required()
+  ),
 
   validateBodyEdit: runSchema<EditSale>(Joi.object<EditSale>({
     sellerName: Joi.string().max(100),
@@ -55,7 +59,7 @@ export const saleService = {
   async add(data: AddSale) {
     const { products, ...saleData } = data;
     const { id: saleId } = await saleModel
-      .create(saleData, { raw: true }) as unknown as Sale;
+      .create({ ...saleData }, { raw: true }) as unknown as Sale;
     const saleProducts = products
       .map(({ id, ...p }) => ({ productId: id, saleId, ...p }));
     await saleProductModel.bulkCreate(saleProducts);
@@ -71,12 +75,11 @@ export const saleService = {
     if (!item) throw new NotFoundError('"sale" not found.');
   },
 
-  async get(id: Sale['id']): Promise<FullSale> {
+  async get(saleId: Sale['id']): Promise<FullSale> {
     const sale = await saleModel
-      .findByPk(id, { raw: true }) as unknown as Sale;
-    const products = await saleProductModel.findAll({
-      where: { saleId: id }, raw: true
-    }) as unknown as SaleProduct[];
+      .findByPk(saleId, { raw: true }) as unknown as Sale;
+    const products = await saleProductModel
+      .findAll({ where: { saleId }, raw: true }) as unknown as SaleProduct[];
     return { ...sale, products } as FullSale;
   },
 

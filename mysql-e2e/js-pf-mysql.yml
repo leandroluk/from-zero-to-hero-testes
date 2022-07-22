@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: mysql-e2e_mysql
+    image: mysql:5
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "13306:3306"
+    volumes:
+      - "./mist:/docker-entrypoint-initdb.d"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    networks:
+      - mysql-e2e
+
+  api:
+    container_name: mysql-e2e_api
+    build:
+      context: ../js-pf-mysql
+      dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - 13000:13000
+    environment:
+      APP_PORT: "13000"
+      MYSQL_URI: "mysql://root:root@mysql:3306/db"
+    networks:
+      - mysql-e2e
+
+networks:
+  mysql-e2e:
+    name: mysql-e2e

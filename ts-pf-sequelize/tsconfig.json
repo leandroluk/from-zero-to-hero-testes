@@ -12,10 +12,10 @@
     "resolveJsonModule": true
   },
   "include": [
-    "src/**/*"
+    "src"
   ],
   "exclude": [
     "node_modules",
-    "**/*.test.ts"
+    "tests"
   ]
 }

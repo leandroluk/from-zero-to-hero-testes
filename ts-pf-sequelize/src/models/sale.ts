@@ -1,14 +1,15 @@
 import {
   DataTypes,
+  Model,
   ModelAttributes,
   ModelOptions,
   Sequelize
 } from 'sequelize';
-import { AddSale, Sale, SequelizeModel } from '../types';
+import { Sale, SequelizeModel } from '../types';
 
 const tableName = 'sale';
 
-const attributes: ModelAttributes = {
+const attributes: ModelAttributes<Model<Sale>> = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -35,10 +36,8 @@ const options: ModelOptions = {
 
 const associate: SequelizeModel['associate'] = (_model, _models) => { };
 
-type Add = Omit<AddSale, 'products'>
-
-export default (sequelize: Sequelize): SequelizeModel<Sale, Add> => {
-  const model = sequelize.define(tableName, attributes, options) as SequelizeModel<Sale, Add>;
+export default (sequelize: Sequelize): SequelizeModel<Sale> => {
+  const model = sequelize.define(tableName, attributes, options) as SequelizeModel;
   model.associate = associate;
   return model;
 };

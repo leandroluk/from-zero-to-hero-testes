@@ -14,6 +14,34 @@
       ],
       "type": "node",
       "localRoot": "./js-pf-mysql"
+    },
+    // mysql-e2e:test
+    {
+      "name": "mysql-e2e:test",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "mysql-e2e:test",
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    // ts-pf-sequelize
+    {
+      "name": "ts-pf-sequelize",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "ts-pf-sequelize"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
     }
   ]
 }

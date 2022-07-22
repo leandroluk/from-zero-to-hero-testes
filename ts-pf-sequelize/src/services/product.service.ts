@@ -5,21 +5,27 @@ import { AddProduct, EditProduct, Indexable, Product } from '../types';
 import { runSchema } from './_services';
 
 export const productService = {
-  validateParamsId: runSchema<Indexable>(Joi.object<Indexable>({
-    id: Joi.number().required().positive().integer(),
-  }).required()),
+  validateParamsId: runSchema<Indexable>(
+    Joi.object<Indexable>({
+      id: Joi.number().required().positive().integer(),
+    }).required()
+  ),
 
-  validateBodyAdd: runSchema<AddProduct>(Joi.object<AddProduct>({
-    description: Joi.string().required().max(100),
-    price: Joi.number().required().positive(),
-    unit: Joi.string().required().max(20),
-  }).required()),
+  validateBodyAdd: runSchema<AddProduct>(
+    Joi.object<AddProduct>({
+      description: Joi.string().required().max(100),
+      price: Joi.number().required().positive(),
+      unit: Joi.string().required().max(20),
+    }).required()
+  ),
 
-  validateBodyEdit: runSchema<EditProduct>(Joi.object<EditProduct>({
-    description: Joi.string().max(100),
-    price: Joi.number().positive(),
-    unit: Joi.string().max(20),
-  }).required()),
+  validateBodyEdit: runSchema<EditProduct>(
+    Joi.object<EditProduct>({
+      description: Joi.string().max(100),
+      price: Joi.number().positive(),
+      unit: Joi.string().max(20),
+    }).required()
+  ),
 
   async existsByArrayOfId(arrayOfId: Array<Product['id']>): Promise<void> {
     const items = await productModel
@@ -36,7 +42,8 @@ export const productService = {
   },
 
   async add(data: AddProduct): Promise<Product['id']> {
-    const { id } = await productModel.create(data) as unknown as Product;
+    const { id } = await productModel
+      .create({ ...data }) as unknown as Product;
     return id;
   },
 

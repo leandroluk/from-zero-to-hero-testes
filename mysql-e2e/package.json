@@ -1,11 +1,16 @@
 {
-  "name": "e2e-mysql",
+  "name": "mysql-e2e",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha features/**/*.{spec,test}.js --exit -t 10000",
-    "compose": "docker-compose down && docker-compose up --build -d"
+    "test": "mocha tests/**/*.test.js --exit -t 999999",
+    "js-pf-mysql": "npm run js-pf-mysql:down && npm run ts-pf-sequelize:down && npm run js-pf-mysql:up",
+    "js-pf-mysql:down": "docker-compose -f js-pf-mysql.yml down",
+    "js-pf-mysql:up": "docker-compose -f js-pf-mysql.yml up --build -d",
+    "ts-pf-sequelize": "npm run js-pf-mysql:down && npm run ts-pf-sequelize:down && npm run ts-pf-sequelize:up",
+    "ts-pf-sequelize:down": "docker-compose -f ts-pf-sequelize.yml down",
+    "ts-pf-sequelize:up": "docker-compose -f ts-pf-sequelize.yml up --build -d"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +22,11 @@
     "@types/faker": "^6.6.9",
     "@types/mocha": "^9.1.1",
     "@types/mysql": "^2.15.21",
+    "@types/sinon": "^10.0.13",
     "chai": "^4.3.6",
     "chai-http": "^4.3.0",
     "mocha": "^10.0.0",
-    "mysql2": "^2.3.3"
+    "mysql2": "^2.3.3",
+    "sinon": "^14.0.0"
   }
 }

@@ -1,17 +1,17 @@
-version: '3'
+version: "3"
 
 services:
   mysql:
     container_name: mysql-e2e_mysql
     image: mysql:5
-    environment: 
+    environment:
       MYSQL_ROOT_PASSWORD: "root"
-    ports: 
+    ports:
       - "13306:3306"
-    volumes: 
+    volumes:
       - "./mist:/docker-entrypoint-initdb.d"
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-proot" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
       timeout: 10s
       retries: 10
       start_period: 10s
@@ -20,8 +20,8 @@ services:
 
   api:
     container_name: mysql-e2e_api
-    build: 
-      context: ../js-pf-mysql
+    build:
+      context: ../ts-pf-sequelize
       dockerfile: Dockerfile
     depends_on:
       mysql:

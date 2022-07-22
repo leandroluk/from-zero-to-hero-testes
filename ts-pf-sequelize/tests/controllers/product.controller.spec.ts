@@ -43,7 +43,7 @@ describe('controllers/product.controller', () => {
       sinon.stub(productService, 'validateParamsId').resolves({ id: 1 });
       sinon.stub(productService, 'validateBodyEdit').resolves();
       sinon.stub(productService, 'exists').resolves();
-      sinon.stub(productService, 'edit').resolves();
+      sinon.stub(productService, 'edit').rejects();
       const res = makeRes();
       return expect(productController.edit(req, res))
         .to.eventually.be.rejected;

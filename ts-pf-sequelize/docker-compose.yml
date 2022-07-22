@@ -25,14 +25,7 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    command: >
-      bash -c "
-        npm add sequelize-cli &&
-        npx sequelize-cli db:drop && 
-        npx sequelize-cli db:create && 
-        npx sequelize-cli db:migrate && 
-        npx sequelize-cli db:seed:all
-      "
+    command: bash -c "npm run db && npm start"
     networks: 
       - "ts-pf-sequelize"
 

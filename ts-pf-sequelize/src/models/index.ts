@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { SequelizeModel } from '../types';
 import vars from '../vars';
 import makeProduct from './product';
 import makeSale from './sale';
@@ -24,6 +25,6 @@ const models = {
 
 Object
   .values(models)
-  .forEach((model) => model.associate?.(model, models));
+  .forEach((model: SequelizeModel) => model.associate?.(model, models));
 
 export default sequelize;

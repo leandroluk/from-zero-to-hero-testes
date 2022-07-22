@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "install": "npm i --prefix js-pf-mysql",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mysql-e2e:test": "cd ./mysql-e2e && npm run test",
+    "ts-pf-sequelize": "cd ./ts-pf-sequelize && npm run nodemon"
   },
   "repository": {
     "type": "git",

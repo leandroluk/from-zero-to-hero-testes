@@ -10,7 +10,7 @@ const { expect } = chai
 const baseUrl = 'http://localhost:13000'
 
 describe('products', () => {
-  beforeEach(async () => await runSeed())
+  beforeEach(runSeed)
 
   it('should list all available products and return with status 200', async () => {
     const sql = `
