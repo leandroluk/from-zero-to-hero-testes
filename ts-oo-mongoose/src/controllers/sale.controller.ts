@@ -7,13 +7,31 @@ export class SaleController {
     readonly productService: ProductService
   ) { }
 
+  async remove(req: Request, res: Response): Promise<void> {
+    const { id } = await this.saleService.validateParamsId(req.params);
+    await this.saleService.exists(id);
+    await this.saleService.remove(id);
+    res.sendStatus(204);
+  }
+
   async edit(req: Request, res: Response): Promise<void> {
     const [{ id }, changes] = await Promise.all([
       this.saleService.validateParamsId(req.params),
       this.saleService.validateBodyEdit(req.body),
     ]);
+    if (changes.products) {
+      const arrayOfProductId = changes.products.map((product) => product.id);
+      await this.productService.existsByArrayOfId(arrayOfProductId);
+    }
     await this.saleService.exists(id);
     await this.saleService.edit(id, changes);
+    const result = await this.saleService.get(id);
+    res.json(result);
+  }
+
+  async get(req: Request, res: Response): Promise<void> {
+    const { id } = await this.saleService.validateParamsId(req.params);
+    await this.saleService.exists(id);
     const result = await this.saleService.get(id);
     res.json(result);
   }
@@ -25,20 +43,6 @@ export class SaleController {
     const id = await this.saleService.add(data);
     const result = await this.saleService.get(id);
     res.status(201).json(result);
-  }
-
-  async remove(req: Request, res: Response): Promise<void> {
-    const { id } = await this.saleService.validateParamsId(req.params);
-    await this.saleService.exists(id);
-    await this.saleService.remove(id);
-    res.sendStatus(204);
-  }
-
-  async get(req: Request, res: Response): Promise<void> {
-    const { id } = await this.saleService.validateParamsId(req.params);
-    await this.saleService.exists(id);
-    const result = await this.saleService.get(id);
-    res.json(result);
   }
 
   async list(_req: Request, res: Response): Promise<void> {

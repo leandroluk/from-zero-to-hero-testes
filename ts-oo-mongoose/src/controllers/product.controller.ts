@@ -6,6 +6,13 @@ export class ProductController {
     readonly productService: ProductService
   ) { }
 
+  async remove(req: Request, res: Response): Promise<void> {
+    const { id } = await this.productService.validateParamsId(req.params);
+    await this.productService.exists(id);
+    await this.productService.remove(id);
+    res.sendStatus(204);
+  }
+
   async edit(req: Request, res: Response): Promise<void> {
     const [{ id }, changes] = await Promise.all([
       this.productService.validateParamsId(req.params),
@@ -17,25 +24,18 @@ export class ProductController {
     res.json(result);
   }
 
-  async add(req: Request, res: Response): Promise<void> {
-    const data = await this.productService.validateBodyAdd(req.body);
-    const id = await this.productService.add(data);
-    const result = await this.productService.get(id);
-    res.status(201).json(result);
-  }
-
-  async remove(req: Request, res: Response): Promise<void> {
-    const { id } = await this.productService.validateParamsId(req.params);
-    await this.productService.exists(id);
-    await this.productService.remove(id);
-    res.sendStatus(204);
-  }
-
   async get(req: Request, res: Response): Promise<void> {
     const { id } = await this.productService.validateParamsId(req.params);
     await this.productService.exists(id);
     const result = await this.productService.get(id);
     res.json(result);
+  }
+
+  async add(req: Request, res: Response): Promise<void> {
+    const data = await this.productService.validateBodyAdd(req.body);
+    const id = await this.productService.add(data);
+    const result = await this.productService.get(id);
+    res.status(201).json(result);
   }
 
   async list(_req: Request, res: Response): Promise<void> {

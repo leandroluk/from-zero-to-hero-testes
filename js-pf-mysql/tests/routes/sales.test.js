@@ -102,17 +102,20 @@ describe('routes/api/sales', () => {
     it('should return 200 if success', async () => {
       const url = `${baseUrl}/1`;
       sinon.stub(db, 'query')
-        .onCall(0).resolves([[{}]]) //  saleModel.exists
-        .onCall(1).resolves() //        saleModel.edit
-        .onCall(2).resolves() //        saleProductModel.bulkRemoveBySaleId
-        .onCall(3).resolves() //        saleProductModel.bulkAddBySaleId
-        .onCall(4).resolves([[{}]]) //  saleModel.get
-        .onCall(5).resolves([[]]); //   saleProductModel.listBySaleId
+        .onCall(0).resolves([[{ id: 1 }]]) // productService.existsByArrayOfId
+        .onCall(1).resolves([[{}]]) //        saleModel.exists
+        .onCall(2).resolves() //              saleModel.edit
+        .onCall(3).resolves() //              saleProductModel.bulkRemoveBySaleId
+        .onCall(4).resolves() //              saleProductModel.bulkAddBySaleId
+        .onCall(5).resolves([[{}]]) //        saleModel.get
+        .onCall(6).resolves([[]]); //         saleProductModel.listBySaleId
 
       const result = await chai
         .request(app)
         .put(url)
         .send({
+          sellerName: 'a',
+          purchaserName: 'a',
           products: [{
             id: 1,
             description: 'a',

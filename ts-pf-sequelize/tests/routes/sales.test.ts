@@ -64,8 +64,10 @@ describe('routes/api/sales', () => {
 
     it('should return 200 if success', async () => {
       const url = `${baseUrl}/1`;
-      const mock = { toJSON: () => ({}) } as Model;
-      sinon.stub(saleModel, 'findByPk').resolves(mock);
+      const saleModelFindByPK = { toJSON: () => ({}) } as Model;
+      const productModelFindAll: any = [{ id: 1 }];
+      sinon.stub(productModel, 'findAll').resolves(productModelFindAll);
+      sinon.stub(saleModel, 'findByPk').resolves(saleModelFindByPK);
       sinon.stub(saleModel, 'update').resolves();
       sinon.stub(saleProductModel, 'destroy').resolves();
       sinon.stub(saleProductModel, 'bulkCreate').resolves();

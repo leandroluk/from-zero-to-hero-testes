@@ -1,8 +1,7 @@
 import Joi from 'joi';
-import { NotFoundError } from '../errors';
 import { productModel } from '../models';
 import { AddProduct, EditProduct, Indexable, Product } from '../types';
-import { runSchema } from './_services';
+import { runSchema, throwNotFoundError } from './_services';
 
 export const productService = {
   validateParamsId: runSchema<Indexable>(
@@ -32,7 +31,7 @@ export const productService = {
       .findAll({ where: { id: arrayOfId } }) as unknown as Product[];
     arrayOfId.forEach((id, index) => {
       if (!items.some((item) => item.id === id)) {
-        throw new NotFoundError(`"product[${index}]" not found.`);
+        throwNotFoundError(`"product[${index}]" not found.`);
       }
     });
   },
@@ -53,7 +52,7 @@ export const productService = {
 
   async exists(id: Product['id']): Promise<void> {
     const item = await productModel.findByPk(id);
-    if (!item) throw new NotFoundError('"product" not found.');
+    if (!item) throwNotFoundError('"product" not found.');
   },
 
   async get(id: Product['id']): Promise<Product> {

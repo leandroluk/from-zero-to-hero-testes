@@ -2,11 +2,7 @@ import { expect, use } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { Model } from 'sequelize';
 import sinon from 'sinon';
-import { NotFoundError } from '../../src/errors';
-import {
-  saleModel,
-  saleProductModel
-} from '../../src/models';
+import { saleModel, saleProductModel } from '../../src/models';
 import { saleService } from '../../src/services';
 import { AddSale, EditSale } from '../../src/types';
 
@@ -103,7 +99,7 @@ describe('services/sale.service', () => {
     it('should rejects if saleModel.findByPk return empty', () => {
       sinon.stub(saleModel, 'findByPk').resolves();
       return expect(saleService.exists(1))
-        .to.eventually.be.rejectedWith(NotFoundError, '"sale" not found.');
+        .to.eventually.be.rejected.and.have.property('name', 'NotFoundError');
     });
 
     it('should resolves if success', () => {

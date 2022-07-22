@@ -12,6 +12,13 @@ const runSchema = (schema) => async (unknown) => {
   return value;
 };
 
+const throwNotFoundError = (message) => {
+  const error = new Error(message)
+  error.name = 'NotFoundError'
+  throw error
+}
+
 module.exports = {
   runSchema,
+  throwNotFoundError
 };

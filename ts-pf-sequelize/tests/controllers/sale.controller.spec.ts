@@ -15,9 +15,11 @@ describe('controllers/sale.controller', () => {
   const req = {} as Request;
 
   describe('edit', () => {
+    const changes: any = { products: [{ id: 1 }] };
+
     it('should rejects if saleService.validateParamsId throws', () => {
       sinon.stub(saleService, 'validateParamsId').rejects();
-      sinon.stub(saleService, 'validateBodyEdit').resolves();
+      sinon.stub(saleService, 'validateBodyEdit').resolves(changes);
       const res = makeRes();
       return expect(saleController.edit(req, res))
         .to.eventually.be.rejected;
@@ -31,9 +33,19 @@ describe('controllers/sale.controller', () => {
         .to.eventually.be.rejected;
     });
 
+    it('should rejects if productService.existsByArrayOfId throws', () => {
+      sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
+      sinon.stub(saleService, 'validateBodyEdit').resolves(changes);
+      sinon.stub(productService, 'existsByArrayOfId').rejects();
+      const res = makeRes();
+      return expect(saleController.edit(req, res))
+        .to.eventually.be.rejected;
+    });
+
     it('should rejects if saleService.exists throws', () => {
       sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'validateBodyEdit').resolves();
+      sinon.stub(saleService, 'validateBodyEdit').resolves(changes);
+      sinon.stub(productService, 'existsByArrayOfId').resolves();
       sinon.stub(saleService, 'exists').rejects();
       const res = makeRes();
       return expect(saleController.edit(req, res))
@@ -42,7 +54,7 @@ describe('controllers/sale.controller', () => {
 
     it('should rejects if saleService.edit throws', () => {
       sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'validateBodyEdit').resolves();
+      sinon.stub(saleService, 'validateBodyEdit').resolves({});
       sinon.stub(saleService, 'exists').resolves();
       sinon.stub(saleService, 'edit').rejects();
       const res = makeRes();
@@ -52,7 +64,7 @@ describe('controllers/sale.controller', () => {
 
     it('should rejects if saleService.get throws', () => {
       sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'validateBodyEdit').resolves();
+      sinon.stub(saleService, 'validateBodyEdit').resolves({});
       sinon.stub(saleService, 'exists').resolves();
       sinon.stub(saleService, 'edit').resolves();
       sinon.stub(saleService, 'get').rejects();
@@ -63,7 +75,7 @@ describe('controllers/sale.controller', () => {
 
     it('should resolves if success', async () => {
       sinon.stub(saleService, 'validateParamsId').resolves({ id: 1 });
-      sinon.stub(saleService, 'validateBodyEdit').resolves();
+      sinon.stub(saleService, 'validateBodyEdit').resolves({});
       sinon.stub(saleService, 'exists').resolves();
       sinon.stub(saleService, 'edit').resolves();
       sinon.stub(saleService, 'get').resolves();

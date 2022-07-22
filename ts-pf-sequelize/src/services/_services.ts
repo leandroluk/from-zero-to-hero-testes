@@ -10,3 +10,9 @@ export const runSchema = <T>(schema: Schema<T>) => (
     return value;
   }
 );
+
+export const throwNotFoundError = (message: string): never => {
+  const error = new Error(message);
+  error.name = 'NotFoundError';
+  throw error;
+};

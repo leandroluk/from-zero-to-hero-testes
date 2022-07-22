@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import { NotFoundError } from '../errors';
 import { saleModel, saleProductModel } from '../models';
 import {
   AddSale,
@@ -10,7 +9,7 @@ import {
   SaleProduct,
   SaleProducts
 } from '../types';
-import { runSchema } from './_services';
+import { runSchema, throwNotFoundError } from './_services';
 
 export const saleService = {
   validateParamsId: runSchema<Indexable>(
@@ -72,7 +71,7 @@ export const saleService = {
 
   async exists(id: Sale['id']): Promise<void> {
     const item = await saleModel.findByPk(id);
-    if (!item) throw new NotFoundError('"sale" not found.');
+    if (!item) throwNotFoundError('"sale" not found.');
   },
 
   async get(saleId: Sale['id']): Promise<FullSale> {

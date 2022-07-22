@@ -15,6 +15,10 @@ const saleController = {
       saleService.validateParamsId(req.params),
       saleService.validateBodyEdit(req.body),
     ]);
+    if (changes.products) {
+      const arrayOfProductId = changes.products.map((product) => product.id);
+      await productService.existsByArrayOfId(arrayOfProductId);
+    }
     await saleService.exists(id);
     await saleService.edit(id, changes);
     const result = await saleService.get(id);

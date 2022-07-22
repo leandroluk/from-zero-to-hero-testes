@@ -2,7 +2,6 @@ import { expect, use } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { Model } from 'sequelize';
 import sinon from 'sinon';
-import { NotFoundError } from '../../src/errors';
 import { productModel } from '../../src/models';
 import { productService } from '../../src/services';
 import { AddProduct } from '../../src/types';
@@ -28,7 +27,7 @@ describe('services/product.service', () => {
     it('should rejects if productModel.findAll return missing item', () => {
       sinon.stub(productModel, 'findAll').resolves([]);
       return expect(productService.existsByArrayOfId([1]))
-        .to.eventually.be.rejectedWith(NotFoundError, '"product[0]" not found.');
+        .to.eventually.be.rejected.and.have.property('name', 'NotFoundError');
     });
 
     it('should resolves if success', () => {
@@ -49,7 +48,7 @@ describe('services/product.service', () => {
     it('should rejects if productModel.findByPk return empty', () => {
       sinon.stub(productModel, 'findByPk').resolves();
       return expect(productService.exists(1))
-        .to.eventually.be.rejectedWith(NotFoundError, '"product" not found.');
+        .to.eventually.be.rejected.and.have.property('name', 'NotFoundError');
     });
 
     it('should resolves if success', () => {

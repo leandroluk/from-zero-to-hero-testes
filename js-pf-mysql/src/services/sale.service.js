@@ -1,7 +1,6 @@
 const Joi = require('joi');
 const { saleModel, saleProductModel } = require('../models');
-const { NotFoundError } = require('../errors');
-const { runSchema } = require('./_services');
+const { runSchema, throwNotFoundError } = require('./_services');
 
 const saleService = {
   validateParamsId: runSchema(Joi.object({
@@ -41,7 +40,7 @@ const saleService = {
 
   async exists(id) {
     const item = await saleModel.get(id);
-    if (!item) throw new NotFoundError('"sale" not found.');
+    if (!item) throwNotFoundError('"sale" not found.');
   },
 
   async edit(id, changes) {

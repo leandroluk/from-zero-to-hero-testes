@@ -3,7 +3,6 @@ const sinon = require('sinon');
 const chaiAsPromised = require('chai-as-promised');
 const { productService } = require('../../src/services');
 const { productModel } = require('../../src/models');
-const { NotFoundError } = require('../../src/errors');
 
 use(chaiAsPromised);
 
@@ -39,7 +38,7 @@ describe('services/product.service', () => {
     it('should rejects if productModel.get return empty', () => {
       sinon.stub(productModel, 'get').resolves();
       return expect(productService.exists(1))
-        .to.eventually.be.rejectedWith(NotFoundError);
+        .to.eventually.be.rejected.and.have.property('name', 'NotFoundError');
     });
 
     it('should resolves if success', () => {
@@ -59,7 +58,7 @@ describe('services/product.service', () => {
     it('should rejects if productModel.listByArrayOfId return missing item', () => {
       sinon.stub(productModel, 'listByArrayOfId').resolves([{ id: 2 }]);
       return expect(productService.existsByArrayOfId([1]))
-        .to.eventually.be.rejectedWith(NotFoundError);
+        .to.eventually.be.rejected.and.have.property('name', 'NotFoundError');
     });
 
     it('should resolves if success', () => {

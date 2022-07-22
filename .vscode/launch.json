@@ -42,6 +42,20 @@
         "<node_internals>/**"
       ],
       "type": "node"
+    },
+    // ts-oo-mongoose
+    {
+      "name": "ts-oo-mongoose",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "ts-oo-mongoose"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
     }
   ]
 }
