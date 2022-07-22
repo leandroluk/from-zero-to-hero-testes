@@ -9,6 +9,8 @@ module.exports = {
   rules: {
     'comma-dangle': 'off',
     'no-unused-vars': 'off',
+    'no-useless-constructor': 'off',
+    'no-empty-function': 'off',
     '@typescript-eslint/no-unused-vars': ['error', {
       argsIgnorePattern: '^_',
       varsIgnorePattern: '^_',

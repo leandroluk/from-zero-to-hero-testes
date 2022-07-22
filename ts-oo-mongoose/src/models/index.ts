@@ -15,9 +15,9 @@ const defaultOptions: SchemaOptions = {
   }
 };
 
-export const productModel = makeProduct(defaultOptions);
-export const saleModel = makeSale(defaultOptions);
-export const saleProductModel = makeSalePoduct(defaultOptions);
+export const ProductModel = makeProduct(defaultOptions);
+export const SaleModel = makeSale(defaultOptions);
+export const SaleProductModel = makeSalePoduct(defaultOptions);
 
 export default async () => {
   await connect(vars.mongo.uri);

@@ -1,16 +1,17 @@
 import { Router } from 'express';
-import { saleController } from '../../controllers';
+import { makeSaleController } from '../../factories';
 
 const route = Router();
+const saleController = makeSaleController();
 
-route.delete('/:id', saleController.remove);
+route.delete('/:id', async (req, res) => saleController.remove(req, res));
 
-route.put('/:id', saleController.edit);
+route.put('/:id', async (req, res) => saleController.edit(req, res));
 
-route.get('/:id', saleController.get);
+route.get('/:id', async (req, res) => saleController.get(req, res));
 
-route.post('/', saleController.add);
+route.post('/', async (req, res) => saleController.add(req, res));
 
-route.get('/', saleController.list);
+route.get('/', async (req, res) => saleController.list(req, res));
 
 export default route;

@@ -1,16 +1,17 @@
 import { Router } from 'express';
-import { productController } from '../../controllers';
+import { makeProductController } from '../../factories';
 
 const route = Router();
+const productController = makeProductController();
 
-route.delete('/:id', productController.remove);
+route.delete('/:id', async (req, res) => productController.remove(req, res));
 
-route.put('/:id', productController.edit);
+route.put('/:id', async (req, res) => productController.edit(req, res));
 
-route.get('/:id', productController.get);
+route.get('/:id', async (req, res) => productController.get(req, res));
 
-route.post('/', productController.add);
+route.post('/', async (req, res) => productController.add(req, res));
 
-route.get('/', productController.list);
+route.get('/', async (req, res) => productController.list(req, res));
 
 export default route;
