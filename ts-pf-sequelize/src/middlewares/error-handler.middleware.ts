@@ -1,11 +1,14 @@
 import { ErrorRequestHandler } from 'express';
 
-export const errorHandlerMiddleware: ErrorRequestHandler = (err, _req, res, next) => {
+const errors: Record<string, number> = {
+  'ValidationError': 400,
+  'NotFoundError': 404
+}
+
+export const errorHandlerMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
   const { name, message } = err;
-  switch (name) {
-    case 'ValidationError': res.status(400).json({ message }); break;
-    case 'NotFoundError': res.status(404).json({ message }); break;
-    default: console.error(err); res.sendStatus(500);
-  }
-  next();
+  const status = errors[name];
+  if (status) return res.status(status).json({ name, message });
+  console.error(err);
+  res.sendStatus(500);
 };
