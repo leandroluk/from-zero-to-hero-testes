@@ -110,7 +110,7 @@ Além desses existem outros tipos de testes que são feitos de forma esporádica
 - **<u>Testes de resiliência:</u>** quando em uma visão macro da solução são mapeados os principais problemas que podem ocorrer quando um artefato da solução não está funcionando como esperado.
 - **<u>Testes de sobrecarga:</u>** quando se prepara um ambiente em que ele será sobrecarregado para ver possíveis falhas com esse tipo de situação e formas de contornar o problema.
 - **<u>Testes de segurança:</u>** quando se analisa se há alguma falha de segurança em relação ao acesso aos dados da aplicação, por exemplo se um usuário consegue acessar ambientes que não deveria.
-- **<u>Testes de UI/UX:</u>** são feitos normalmente quando ocorre uma grande mudança de design e para um público específico, visando validar a experiência do usuário. Também são chamados de testes "a/b"
+- **<u>Testes de usabilidade:</u>** são feitos normalmente quando ocorre uma grande mudança de design e para um público específico, visando validar a experiência do usuário. Também são chamados de testes "a/b"
 
 ## **✌️ Parte II**
 
