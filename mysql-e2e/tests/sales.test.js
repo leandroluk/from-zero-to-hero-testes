@@ -81,7 +81,7 @@ describe('sales', () => {
           description: faker.commerce.product(),
           quantity: Number(faker.commerce.price(1, 5, 0)),
           price: Number(faker.commerce.price(0, 300, 2)),
-          unit: faker.name.findName().slice(0, 2).toLowerCase()
+          unit: faker.name.fullName().slice(0, 2).toLowerCase()
         }
       ]
     }

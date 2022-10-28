@@ -259,4 +259,4 @@ const case = {
 
 ![end-to-end-tests.png](./image/end-to-end-tests.png){width=60%}
 
-<small>(exemplo de fluxo uma solução completa)</small>
+<small>(exemplo de fluxo de uma solução completa)</small>

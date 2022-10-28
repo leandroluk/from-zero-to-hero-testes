@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mysql:
-    container_name: mysql-e2e_mysql
+    container_name: mysql
     image: mysql:5
     environment:
       MYSQL_ROOT_PASSWORD: "root"
@@ -19,7 +19,7 @@ services:
       - mysql-e2e
 
   api:
-    container_name: mysql-e2e_api
+    container_name: api
     build:
       context: ../js-pf-mysql
       dockerfile: Dockerfile
