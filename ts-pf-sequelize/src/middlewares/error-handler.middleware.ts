@@ -5,10 +5,13 @@ const errors: Record<string, number> = {
   'NotFoundError': 404
 }
 
-export const errorHandlerMiddleware: ErrorRequestHandler = (err, _req, res, _next) => {
+export const errorHandlerMiddleware: ErrorRequestHandler = (err, _req, res, _next): void => {
   const { name, message } = err;
   const status = errors[name];
-  if (status) return res.status(status).json({ name, message });
+  if (status) {
+    res.status(status).json({ name, message });
+    return
+  }
   console.error(err);
   res.sendStatus(500);
 };
