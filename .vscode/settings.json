@@ -1,7 +1,6 @@
 {
   // editor
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": true,
   "editor.detectIndentation": false,
@@ -40,6 +39,18 @@
       "other": true,
       "comments": false,
       "strings": true
+    }
+  },
+  // markdown
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
     }
   }
 }

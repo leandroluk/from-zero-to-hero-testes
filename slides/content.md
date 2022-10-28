@@ -1,17 +1,17 @@
 ---
-theme: 'night'
-transition: 'slide'
-title:  '🚀 From Zero to Hero - Testes no Backend 🚀'
+theme: "night"
+transition: "slide"
+title: "🚀 From Zero to Hero - Testes no Backend 🚀"
 enableMenu: false
 enableSearch: false
 enableChalkboard: false
-highlightTheme: 'monokai'
+highlightTheme: "monokai"
 progressBar: true
 ---
 
 ### **🚀 From Zero to Hero 🚀**
-#### Testes no Backend
 
+#### Testes no Backend
 
 ---
 
@@ -102,79 +102,83 @@ progressBar: true
 #### **Chamada de função (call)**
 
 ```js
-const model = {
-  async getById(id) { /* ... */ }
-}
-const service = {
+const repo = {
   async getById(id) {
-    const result = await model.getById(id);
-    if(!result) throw new Error('not found');
+    /* ... */
+  },
+};
+const task = {
+  async getById(id) {
+    const result = await repo.getById(id);
+    if (!result) throw new Error("Not found");
     return result;
-  }
-}
+  },
+};
 ```
 
 --
 
-####  **Cálculos matemáticos (math):**
+#### **Cálculos matemáticos (math):**
 
 ```js
-const service = {
+const task = {
   async checkIsAdult(birthDate) {
     const diff = new Date(Date.now() - birthDate.getTime());
     const year = diff.getUTCFullYear();
     const age = Math.abs(year - 1970);
     return age;
-  }
-}
+  },
+};
 ```
 
 --
 
-####  **Operadores de condição (condition):**
+#### **Operadores de condição (condition):**
 
 ```js
-const service = {
-  async checkImc(value) {
-    if(value < 18.5) return 'Under weight';
-    if(value < 25) return 'Normal';
-    if(value < 30) return 'Over weight';
-    if(value < 35) return 'Obese I';
-    if(value < 40) return 'Obese II';
-    return 'Obese III';
-  }
-}
+const task = {
+  async checkIMC(value) {
+    if (value < 18.5) return "Under weight";
+    if (value < 25) return "Normal";
+    if (value < 30) return "Over weight";
+    if (value < 35) return "Obese I";
+    if (value < 40) return "Obese II";
+    return "Obese III";
+  },
+};
 ```
 
 --
 
-####  **Estrutura de dados (typing):**
+#### **Estrutura de dados (typing):**
 
 ```js
-const connection = require('./connection'); // using mysql
-const model = {
+const mysql = require("mysql2/promise");
+const db = mysql.createPool({ uri: "mysql://" });
+const repo = {
   async getById(id) {
-    const sql = 'SELECT * FROM table WHERE id = ?';
-    const [[row]] = await connection.query(sql, [id]);
+    const sql = "SELECT * FROM table WHERE id = ?";
+    const [[row]] = await db.query(sql, [id]);
     return row;
-  }
-}
+  },
+};
 ```
 
 --
 
-####  **Interpolação de dados (templating):**
+#### **Interpolação de dados (templating):**
 
 ```js
-const service = {
-  buildRecoveryEmail(email) {
-    const link = `http://domain.com/recovery?email=${email}`;
-    let tmpl = '<html><head></head><body>';
-    tmpl += '<a href="${link}" target="_blank">Click to recover</a>';
-    tmpl += '</body></html>';
+const task = {
+  buildRecoveryEmailTemplate(email) {
+    const link = "http://domain.com/recovery?email=" + email;
+    let tmpl = "<html><head></head><body>";
+    tmpl += '<a href="' + link + '" target="_blank">';
+    tmpl += "Click here</a>";
+    tmpl += "</body></html>";
     return tmpl;
-  }
-}
+  },
+};
 ```
 
 ---
@@ -193,33 +197,66 @@ const service = {
 
 <small>O Padrão Triple A - Simples!</small>
 
---
-
-### **Como devo testar?**
-
-- [**Mocha**](https://mochajs.org)
-- [**Chai** + _Pluggins_](https://www.chaijs.com)
-- [**Sinon**](https://sinonjs.org)
-- [**Nyc**](https://github.com/istanbuljs/nyc)
-
 ---
 
-### **Tipos de testes**
-
-**Principais**
+### **Principais tipos de testes**
 
 - Unitários
 - Integração
-- Ponta
+- Ponta-à-ponta
 - Manuais
 
 --
 
-### **Tipos de testes**
-
-**Outros**
+### **Outros tipos de testes**
 
 - Resiliência
 - Sobrecarga
 - Segurança
 - UI/UX
+
+--
+
+### **Testes unitários**
+
+```js
+const task = {
+  async validateToken(token) { /* throws if invalid */ },
+  async checkEmailInUse(email) { /* throws if in use */ },
+  async addUser(data) { /* throws if invalid */ },
+  async getUser(id) { /* throws if not found */ },
+};
+const case = {
+  async addUser(token, data) {
+    await task.validateToken(token)        // throws | ok
+    await task.checkEmailInUse(data.email) // throws | ok
+    const id = await task.addUser(data)    // throws | ok
+    const user = await task.getUser(id)    // throws | ok
+    return user                               // ok
+  },
+};
+```
+
+--
+
+### **Testes de integração (backend)**
+
+![backend-integration-tests.png](./image/backend-integration-tests.png){width=60%}
+
+<small>(fluxo comum de uma api express)</small>
+
+--
+
+### **Testes de integração (frontend)**
+
+![frontend-integration-tests.png](./image/frontend-integration-tests.png){width=60%}
+
+<small>(fluxo comum usando atomic design)</small>
+
+--
+
+### **Testes de ponta-à-ponta**
+
+![end-to-end-tests.png](./image/end-to-end-tests.png){width=60%}
+
+<small>(exemplo de fluxo uma solução completa)</small>
