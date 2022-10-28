@@ -232,7 +232,7 @@ const case = {
     await task.checkEmailInUse(data.email) // throws | ok
     const id = await task.addUser(data)    // throws | ok
     const user = await task.getUser(id)    // throws | ok
-    return user                               // ok
+    return user                            // ok
   },
 };
 ```

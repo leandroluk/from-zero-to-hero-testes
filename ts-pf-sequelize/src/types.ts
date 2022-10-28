@@ -38,7 +38,7 @@ export type EditSale = Partial<Omit<Sale, keyof Indexable>> & {
   products?: SaleProducts
 }
 
-export type SequelizeModel<A = any, C = any> = ModelStatic<Model<A, C>> & {
+export type SequelizeModel<A extends {} = any, C extends {} = any> = ModelStatic<Model<A, C>> & {
   associate?: (
     model: SequelizeModel<A, C>,
     models: Record<string, SequelizeModel>
