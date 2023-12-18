@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "firsttris.vscode-jest-runner",
-    "vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "evilz.vscode-reveal"
   ]
 }
